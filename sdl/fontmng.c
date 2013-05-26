@@ -135,15 +135,16 @@ void fontmng_destroy(void *hdl) {
 static BOOL fdatgetcache(FNTMNG fhdl, const char *string, FNTDAT *pfdat) {
 
 	BOOL	r;
-	UINT	str;
+	UINT16	str = 0;
 	FNTCTBL	*fct;
 	UINT	pos;
 	UINT	prev;
 	UINT	cnt;
 
 	r = FALSE;
-	str = string[0] & 0xff;
-	str |= (string[1] & 0xff) << 8;
+
+	codecnv_utf8toucs2(&str, 1, string, milstr_charsize(string));
+
 	fct = fhdl->cache;
 	cnt = fhdl->caches;
 	pos = fhdl->cachehead;
@@ -170,7 +171,7 @@ static BOOL fdatgetcache(FNTMNG fhdl, const char *string, FNTDAT *pfdat) {
 		else {
 			pos = prev;
 		}
-		fct[pos].str = (UINT16)str;
+		fct[pos].str = str;
 		fct[pos].next = (UINT16)fhdl->cachehead;
 		fhdl->cachehead = pos;
 	}
@@ -220,7 +221,7 @@ static void getlength1(FNTMNG fhdl, FNTDAT fdat,
 	SDL_Surface	*text;
 
 	if (fhdl->fonttype & FDAT_PROPORTIONAL) {
-		codecnv_euctoucs2(utext, NELEMENTS(utext), string, length);
+		codecnv_utf8toucs2(utext, NELEMENTS(utext), string, length);
 		text = TTF_RenderUNICODE_Solid(fhdl->ttf_font, utext, white);
 		setfdathead(fhdl, fdat, length, text);
 		if (text) {
@@ -262,7 +263,7 @@ static void getfont1(FNTMNG fhdl, FNTDAT fdat,
 	int			y;
 	int			depth;
 
-	codecnv_euctoucs2(utext, NELEMENTS(utext), string, length);
+	codecnv_utf8toucs2(utext, NELEMENTS(utext), string, length);
 	text = TTF_RenderUNICODE_Solid(fhdl->ttf_font, utext, white);
 	setfdathead(fhdl, fdat, length, text);
 	dst = (UINT8 *)(fdat + 1);

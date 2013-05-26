@@ -77,7 +77,7 @@ NP2OBJ	=	$(OBJ)/strres.o		$(OBJ)/milstr.o		$(OBJ)/_memory.o	\
 			$(OBJ)/textfile.o	$(OBJ)/profile.o	$(OBJ)/rect.o		\
 			$(OBJ)/lstarray.o	$(OBJ)/bmpdata.o	$(OBJ)/parts.o		\
 			$(OBJ)/resize.o												\
-			$(OBJ)/sjiseuc.o	$(OBJ)/eucsjis.o	$(OBJ)/eucucs2.o	\
+			$(OBJ)/sjiseuc.o	$(OBJ)/eucsjis.o	$(OBJ)/utf8ucs2.o	\
 			$(OBJ)/i286c.o		$(OBJ)/i286c_mn.o	$(OBJ)/i286c_ea.o	\
 			$(OBJ)/i286c_0f.o	$(OBJ)/i286c_8x.o	$(OBJ)/i286c_sf.o	\
 			$(OBJ)/i286c_f6.o	$(OBJ)/i286c_fe.o	$(OBJ)/i286c_rp.o	\
@@ -212,7 +212,7 @@ $(OBJ)/sjiseuc.o	:	$(CODECNV)/sjiseuc.c $(HEADERS) $(CODECNV)/codecnv.h
 $(OBJ)/eucsjis.o	:	$(CODECNV)/eucsjis.c $(HEADERS) $(CODECNV)/codecnv.h
 	$(CC) $(COPT) -o $@ $<
 
-$(OBJ)/eucucs2.o	:	$(CODECNV)/eucucs2.c $(HEADERS) $(CODECNV)/codecnv.h
+$(OBJ)/utf8ucs2.o	:	$(CODECNV)/utf8ucs2.c $(HEADERS) $(CODECNV)/codecnv.h
 	$(CC) $(COPT) -o $@ $<
 
 
