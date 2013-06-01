@@ -94,7 +94,7 @@ const SDL_VideoInfo	*vinfo;
 	SDL_VideoDriverName(s, sizeof(s));
 
 	surface = SDL_SetVideoMode(width, height, vinfo->vfmt->BitsPerPixel,
-		    SDL_HWSURFACE | SDL_ANYFORMAT | SDL_DOUBLEBUF | SDL_FULLSCREEN);
+		    SDL_HWSURFACE | SDL_ANYFORMAT | SDL_FULLSCREEN);
 	if (surface == NULL) {
 		fprintf(stderr, "Error: SDL_SetVideoMode: %s\n", SDL_GetError());
 		return(FAILURE);
