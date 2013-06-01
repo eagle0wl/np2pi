@@ -590,20 +590,15 @@ $(OBJ)/opngenc.o	:	$(SOUND)/opngenc.c $(HEADERS) $(PCCORES) $(IOCORES) \
 						$(FMBOARDS) $(SOUND)/sound.h $(GENERIC)/keydisp.h
 	$(CC) $(COPT) -o $@ $<
 
-$(OBJ)/opngeng.o	:	$(SOUND)/opngeng.c $(HEADERS) $(PCCORES) $(IOCORES) \
-						$(FMBOARDS) $(SOUND)/sound.h
-	$(CC) $(COPT) -o $@ $<
-
-$(OBJ)/opngeng.oa	:	$(X86ASM)/opngeng.x86
-	$(AS) $(AOPT) $< -o $@
+$(OBJ)/opngeng.o	:	$(ARM)/psggeng.s
+	$(AS) $(AOPT) -o $@ $<
 
 $(OBJ)/psggenc.o	:	$(SOUND)/psggenc.c $(HEADERS) $(SOUND)/sound.h \
 						$(SOUND)/psggen.h $(GENERIC)/keydisp.h
 	$(CC) $(COPT) -o $@ $<
 
-$(OBJ)/psggeng.o	:	$(SOUND)/psggeng.c $(HEADERS) $(COMMON)/parts.h \
-						$(SOUND)/sound.h $(SOUND)/psggen.h
-	$(CC) $(COPT) -o $@ $<
+$(OBJ)/psggeng.o	:	$(ARM)/psggeng.s
+	$(AS) $(AOPT) -o $@ $<
 
 $(OBJ)/rhythmc.o	:	$(SOUND)/rhythmc.c $(HEADERS) $(PCCORES) \
 						$(COMMON)/wavefile.h $(TARGET)/dosio.h \
