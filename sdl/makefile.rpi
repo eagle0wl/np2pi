@@ -5,6 +5,7 @@ SDL_CONFIG = sdl-config
 SDL_CFLAGS = `$(SDL_CONFIG) --cflags` -I/usr/local/include/SDL
 
 CC		= gcc
+AS		= as
 RM		= rm -f
 
 OBJBASE	= ../obj
@@ -31,6 +32,7 @@ GENERIC		= ../generic
 EMBED		= ../embed
 MENU		= ../embed/menu
 MENUBASE	= ../embed/menubase
+ARM			= arm
 TARGET		= .
 TARGET2		= ./raspberrypi
 
@@ -71,6 +73,7 @@ COPT	= -c -Wall -pipe -O3 -Wpointer-arith -fno-exceptions \
 			-I$(CBUS) -I$(BIOS) -I$(LIO) -I$(VRAM) -I$(SOUND) -I$(VERMOUTH) \
 			-I$(GETSND) -I$(FDD) -I$(FONT) -I$(GENERIC) -I$(EMBED) -I$(MENU) \
 			-I$(MENUBASE) -I$(TARGET) -I$(TARGET2) $(SDL_CFLAGS)
+AOPT	= -I$(ARM)
 LOPT	=
 
 NP2OBJ	=	$(OBJ)/strres.o		$(OBJ)/milstr.o		$(OBJ)/_memory.o	\
@@ -687,10 +690,8 @@ $(OBJ)/scrndraw.o	:	$(VRAM)/scrndraw.c $(HEADERS) $(PCCORES) $(IOCORES) \
 						$(VRAM)/sdraw.h $(VRAM)/dispsync.h $(VRAM)/palettes.h
 	$(CC) $(COPT) -o $@ $<
 
-$(OBJ)/sdraw.o		:	$(VRAM)/sdraw.c $(HEADERS) $(TARGET)/scrnmng.h \
-						$(VRAM)/scrndraw.h $(VRAM)/sdraw.h \
-						$(VRAM)/palettes.h $(VRAM)/sdraw.mcr
-	$(CC) $(COPT) -o $@ $<
+$(OBJ)/sdraw.o		:	$(ARM)/sdraw.s $(ARM)/sdraw.inc
+	$(AS) $(AOPT) -o $@ $<
 
 $(OBJ)/sdrawq16.o	:	$(VRAM)/sdrawq16.c $(HEADERS) $(TARGET)/scrnmng.h \
 						$(VRAM)/scrndraw.h $(VRAM)/sdraw.h \
