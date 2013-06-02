@@ -148,7 +148,7 @@ int SDL_main(int argc, char **argv) {
 		goto np2main_err3;
 	}
 
-        mousemng_initialize();
+	mousemng_initialize();
 
 	scrnmng_initialize();
 	if (scrnmng_create(FULLSCREEN_WIDTH, FULLSCREEN_HEIGHT) != SUCCESS) {
@@ -162,7 +162,7 @@ int SDL_main(int argc, char **argv) {
 	pccore_init();
 	S98_init();
 
-        mousemng_capture(TRUE);
+	mousemng_capture(TRUE);
 	scrndraw_redraw();
 	pccore_reset();
 

@@ -336,7 +336,7 @@ BOOL scrnmng_entermenu(SCRNMENU *smenu) {
 	smenu->width = scrnmng.width;
 	smenu->height = scrnmng.height;
 	smenu->bpp = (scrnmng.bpp == 32)?24:scrnmng.bpp;
-    mousemng_capture(FALSE);
+	mousemng_capture(FALSE);
 	return(SUCCESS);
 
 smem_err:
@@ -346,7 +346,7 @@ smem_err:
 void scrnmng_leavemenu(void) {
 
 	VRAM_RELEASE(scrnmng.vram);
-    mousemng_capture(TRUE);
+	mousemng_capture(TRUE);
 }
 
 void scrnmng_menudraw(const RECT_T *rct) {

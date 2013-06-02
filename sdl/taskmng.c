@@ -39,36 +39,36 @@ void taskmng_rol(void) {
 	switch(e.type) {
 		case SDL_MOUSEMOTION:
 			if (menuvram == NULL)
-              mousemng_onmove(&e.motion);
+				mousemng_onmove(&e.motion);
 			else
-              menubase_moving(e.motion.x, e.motion.y, 0);
+				menubase_moving(e.motion.x, e.motion.y, 0);
 			break;
 
 		case SDL_MOUSEBUTTONUP:
 			if (menuvram == NULL) {
-              if (e.button.button == SDL_BUTTON_MIDDLE)
-                sysmenu_menuopen(0, e.button.x, e.button.y);
-              else
-                mousemng_buttonevent(&e.button);
+				if (e.button.button == SDL_BUTTON_MIDDLE)
+					sysmenu_menuopen(0, e.button.x, e.button.y);
+				else
+					mousemng_buttonevent(&e.button);
 			}
             else {
-              switch (e.button.button) {
-              case SDL_BUTTON_LEFT:
-                menubase_moving(e.button.x, e.button.y, 2);
-                break;
-              case SDL_BUTTON_MIDDLE:
-                menubase_close();
-                break;
-              }
+				switch (e.button.button) {
+				case SDL_BUTTON_LEFT:
+					menubase_moving(e.button.x, e.button.y, 2);
+					break;
+				case SDL_BUTTON_MIDDLE:
+					menubase_close();
+					break;
+				}
 			}
 			break;
 
 		case SDL_MOUSEBUTTONDOWN:
 			if (menuvram == NULL)
-              mousemng_buttonevent(&e.button);
+				mousemng_buttonevent(&e.button);
             else {
-              if (e.button.button == SDL_BUTTON_LEFT)
-                menubase_moving(e.button.x, e.button.y, 1);
+				if (e.button.button == SDL_BUTTON_LEFT)
+					menubase_moving(e.button.x, e.button.y, 1);
 			}
 			break;
 
