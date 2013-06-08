@@ -2,18 +2,18 @@
 #include	"parts.h"
 
 
-static	SINT32	randseed = 1;
+SINT32	__randseed = 1;
 
 
 void PARTSCALL rand_setseed(SINT32 seed) {
 
-	randseed = seed;
+	__randseed = seed;
 }
 
 SINT32 PARTSCALL rand_get(void) {
 
-	randseed = (randseed * 0x343fd) + 0x269ec3;
-	return(randseed >> 16);
+	__randseed = (__randseed * 0x343fd) + 0x269ec3;
+	return(__randseed >> 16);
 }
 
 UINT8 PARTSCALL AdjustAfterMultiply(UINT8 value) {
