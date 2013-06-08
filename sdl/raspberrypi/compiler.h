@@ -82,6 +82,17 @@ typedef	unsigned char	BYTE;
 #define	NELEMENTS(a)	((int)(sizeof(a) / sizeof(a[0])))
 #endif
 
+
+// for ARM optimize
+#define	REG8		UINT
+#define REG16		UINT
+#define	LOW12(a)	((((UINT32)(a)) << 20) >> 20)
+#define	LOW14(a)	((((UINT32)(a)) << 18) >> 18)
+#define	LOW15(a)	((((UINT32)(a)) << 17) >> 17)
+#define	LOW16(a)	((UINT16)(a))
+#define	HIGH16(a)	(((UINT32)(a)) >> 16)
+
+
 #define	BRESULT				UINT
 #define	OEMCHAR				char
 #define	OEMTEXT(string)		string
@@ -117,6 +128,7 @@ typedef	unsigned char	BYTE;
 #define	MEMOPTIMIZE		2
 
 #define	SOUNDRESERVE	100
+#define	OPNGENARM
 
 #define	SUPPORT_CRT15KHZ
 #define	SUPPORT_HOSTDRV
