@@ -1,6 +1,7 @@
 @ This file was created from a .asm file
 @  using the ads2gas.pl script.
 	.equ DO1STROUNDING, 0
+.altmacro
 
 	.include 	"sdraw.inc"
 	.global np2_pal16
@@ -38,7 +39,7 @@ putyed_0:		add		r4, r4, #1
 				str		r7, [r0, #S_DST]
 				str		r4, [r0, #S_Y]
 				ldmia	sp!, {r4 - r8, pc}
-pal16_0:			.long 		np2_pal16 + (NP2PAL_TEXT2 * 2)
+pal16_0:			.long 	np2_pal16 + (NP2PAL_TEXT2 * 2)
 
 
 sdraw16p_1:		stmdb	sp!, {r4 - r11, lr}
@@ -58,8 +59,8 @@ putylp_1:		cmp		r12, #0
 				mov		r2, #0
 putxlp_1:		and		r4, r6, #0xff
 				and		r12, r6, #(0xff << 8)
-				mov		r4, r4, lsl#1
-				mov		r12, r12, lsr#7
+				mov		r4, r4, lsl #1
+				mov		r12, r12, lsr #7
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
 				strh	r4, [r9], r3
@@ -67,8 +68,8 @@ putxlp_1:		and		r4, r6, #0xff
 				add		r2, r2, #4
 				and		r4, r6, #(0xff << 16)
 				and		r12, r6, #(0xff << 24)
-				mov		r4, r4, lsr#15
-				mov		r12, r12, lsr#23
+				mov		r4, r4, lsr #15
+				mov		r12, r12, lsr #23
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
 				cmp		r2, r10
@@ -86,7 +87,7 @@ putyed_1:		add		r5, r5, #1
 				str		r8, [r0, #S_DST]
 				str		r5, [r0, #S_Y]
 				ldmia	sp!, {r4 - r11, pc}
-pal16_1:			.long 		np2_pal16 + (NP2PAL_GRPH * 2)
+pal16_1:			.long 	np2_pal16 + (NP2PAL_GRPH * 2)
 
 
 sdraw16p_2:		stmdb	sp!, {r4 - r11, lr}
@@ -109,8 +110,8 @@ putylp_2:		cmp		r12, #0
 putxlp_2:		orr		lr, lr, r12
 				and		r5, lr, #0xff
 				and		r12, lr, #(0xff << 8)
-				mov		r5, r5, lsl#1
-				mov		r12, r12, lsr#7
+				mov		r5, r5, lsl #1
+				mov		r12, r12, lsr #7
 				ldrh	r5, [r5, r11]
 				ldrh	r12, [r12, r11]
 				add		r2, r2, #4
@@ -118,8 +119,8 @@ putxlp_2:		orr		lr, lr, r12
 				strh	r12, [r6], r3
 				and		r5, lr, #(0xff << 16)
 				and		r12, lr, #(0xff << 24)
-				mov		r5, r5, lsr#15
-				mov		r12, r12, lsr#23
+				mov		r5, r5, lsr #15
+				mov		r12, r12, lsr #23
 				ldrh	r5, [r5, r11]
 				ldrh	r12, [r12, r11]
 				cmp		r2, r10
@@ -141,7 +142,7 @@ putyed_2:		add		r4, r4, #1
 				str		r9, [r0, #S_DST]
 				str		r4, [r0, #S_Y]
 				ldmia	sp!, {r4 - r11, pc}
-pal16_2:			.long 		np2_pal16 + (NP2PAL_GRPH * 2)
+pal16_2:			.long 	np2_pal16 + (NP2PAL_GRPH * 2)
 
 
 sdraw16p_ti:		stmdb	sp!, {r4 - r11, lr}
@@ -161,8 +162,8 @@ putylp_ti:		cmp		r12, #0
 				mov		r2, #0
 putexlp_ti:		and		r4, r6, #0xff
 				and		r12, r6, #(0xff << 8)
-				mov		r4, r4, lsl#1
-				mov		r12, r12, lsr#7
+				mov		r4, r4, lsl #1
+				mov		r12, r12, lsr #7
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
 				add		r2, r2, #4
@@ -170,8 +171,8 @@ putexlp_ti:		and		r4, r6, #0xff
 				strh	r12, [r9], r3
 				and		r4, r6, #(0xff << 16)
 				and		r12, r6, #(0xff << 24)
-				mov		r4, r4, lsr#15
-				mov		r12, r12, lsr#23
+				mov		r4, r4, lsr #15
+				mov		r12, r12, lsr #23
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r11, r12]
 				cmp		r2, r10
@@ -191,8 +192,8 @@ putyod_ti:		add		r5, r5, #1
 				sub		r11, r11, #((NP2PAL_GRPH - NP2PAL_TEXT) << 1)
 putoxlp_ti:		and		r4, r6, #0xf0
 				and		r12, r6, #(0xf0 << 8)
-				mov		r4, r4, lsr#3
-				mov		r12, r12, lsr#11
+				mov		r4, r4, lsr #3
+				mov		r12, r12, lsr #11
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
 				add		r2, r2, #4
@@ -200,8 +201,8 @@ putoxlp_ti:		and		r4, r6, #0xf0
 				strh	r12, [r9], r3
 				and		r4, r6, #(0xf0 << 16)
 				and		r12, r6, #(0xf0 << 24)
-				mov		r4, r4, lsr#19
-				mov		r12, r12, lsr#27
+				mov		r4, r4, lsr #19
+				mov		r12, r12, lsr #27
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
 				cmp		r2, r10
@@ -220,7 +221,7 @@ putyed_ti:		add		r5, r5, #1
 				str		r8, [r0, #S_DST]
 				str		r5, [r0, #S_Y]
 				ldmia	sp!, {r4 - r11, pc}
-pal16_ti:		.long 		np2_pal16 + (NP2PAL_GRPH * 2)
+pal16_ti:		.long 	np2_pal16 + (NP2PAL_GRPH * 2)
 
 
 sdraw16p_gi:		stmdb	sp!, {r4 - r11, lr}
@@ -240,8 +241,8 @@ putylp_gi:		cmp		r12, #0
 				mov		r2, #0
 putexlp_gi:		and		r4, r6, #0xff
 				and		r12, r6, #(0xff << 8)
-				mov		r4, r4, lsl#1
-				mov		r12, r12, lsr#7
+				mov		r4, r4, lsl #1
+				mov		r12, r12, lsr #7
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
 				add		r2, r2, #4
@@ -249,8 +250,8 @@ putexlp_gi:		and		r4, r6, #0xff
 				strh	r12, [r9], r3
 				and		r4, r6, #(0xff << 16)
 				and		r12, r6, #(0xff << 24)
-				mov		r4, r4, lsr#15
-				mov		r12, r12, lsr#23
+				mov		r4, r4, lsr #15
+				mov		r12, r12, lsr #23
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
 				cmp		r2, r10
@@ -283,7 +284,7 @@ putyed_gi:		add		r5, r5, #1
 				str		r8, [r0, #S_DST]
 				str		r5, [r0, #S_Y]
 				ldmia	sp!, {r4 - r11, pc}
-pal16_gi:		.long 		np2_pal16 + (NP2PAL_GRPH * 2)
+pal16_gi:		.long 	np2_pal16 + (NP2PAL_GRPH * 2)
 
 
 sdraw16p_2i:		stmdb	sp!, {r4 - r11, lr}
@@ -306,8 +307,8 @@ putylp_2i:		cmp		r12, #0
 putexlp_2i:		orr		lr, lr, r12
 				and		r5, lr, #0xff
 				and		r12, lr, #(0xff << 8)
-				mov		r5, r5, lsl#1
-				mov		r12, r12, lsr#7
+				mov		r5, r5, lsl #1
+				mov		r12, r12, lsr #7
 				ldrh	r5, [r5, r11]
 				ldrh	r12, [r12, r11]
 				add		r2, r2, #4
@@ -315,8 +316,8 @@ putexlp_2i:		orr		lr, lr, r12
 				strh	r12, [r6], r3
 				and		r5, lr, #(0xff << 16)
 				and		r12, lr, #(0xff << 24)
-				mov		r5, r5, lsr#15
-				mov		r12, r12, lsr#23
+				mov		r5, r5, lsr #15
+				mov		r12, r12, lsr #23
 				ldrh	r5, [r5, r11]
 				ldrh	r12, [r12, r11]
 				cmp		r2, r10
@@ -338,8 +339,8 @@ putyod_2i:		add		r4, r4, #1
 				sub		r11, r11, #((NP2PAL_GRPH - NP2PAL_TEXT) << 1)
 putoxlp_2i:		and		r5, lr, #0xf0
 				and		r12, lr, #(0xf0 << 8)
-				mov		r5, r5, lsr#3
-				mov		r12, r12, lsr#11
+				mov		r5, r5, lsr #3
+				mov		r12, r12, lsr #11
 				ldrh	r5, [r5, r11]
 				ldrh	r12, [r12, r11]
 				add		r2, r2, #4
@@ -347,8 +348,8 @@ putoxlp_2i:		and		r5, lr, #0xf0
 				strh	r12, [r6], r3
 				and		r5, lr, #(0xf0 << 16)
 				and		r12, lr, #(0xf0 << 24)
-				mov		r5, r5, lsr#19
-				mov		r12, r12, lsr#27
+				mov		r5, r5, lsr #19
+				mov		r12, r12, lsr #27
 				ldrh	r5, [r5, r11]
 				ldrh	r12, [r12, r11]
 				cmp		r2, r10
@@ -370,7 +371,7 @@ putyed_2i:		add		r4, r4, #1
 				str		r9, [r0, #S_DST]
 				str		r4, [r0, #S_Y]
 				ldmia	sp!, {r4 - r11, pc}
-pal16_2i:		.long 		np2_pal16 + (NP2PAL_GRPH * 2)
+pal16_2i:		.long 	np2_pal16 + (NP2PAL_GRPH * 2)
 
 
 sdraw16p_gie:	stmdb	sp!, {r4 - r11, lr}
@@ -392,7 +393,7 @@ putylp_gie:		ldrb	r12, [r0, r5]
 				mov		r2, #0
 putexlp_gie:		and		r4, r6, #0xff
 				and		r12, r6, #(0xff << 8)
-				mov		r4, r4, lsl#1
+				mov		r4, r4, lsl #1
 				mov		r12, r12, lsr #7
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
@@ -401,8 +402,8 @@ putexlp_gie:		and		r4, r6, #0xff
 				strh	r12, [r9], r3
 				and		r4, r6, #(0xff << 16)
 				and		r12, r6, #(0xff << 24)
-				mov		r4, r4, lsr#15
-				mov		r12, r12, lsr#23
+				mov		r4, r4, lsr #15
+				mov		r12, r12, lsr #23
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
 				cmp		r2, r10
@@ -420,8 +421,8 @@ putyod_gie:		ldrb	r12, [r0, r5]
 				sub		r11, r11, #((NP2PAL_GRPH - NP2PAL_SKIP) << 1)
 putoxlp_gie:		and		r4, r6, #0xff
 				and		r12, r6, #(0xff << 8)
-				mov		r4, r4, lsl#1
-				mov		r12, r12, lsr#7
+				mov		r4, r4, lsl #1
+				mov		r12, r12, lsr #7
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
 				add		r2, r2, #4
@@ -429,8 +430,8 @@ putoxlp_gie:		and		r4, r6, #0xff
 				strh	r12, [r9], r3
 				and		r4, r6, #(0xff << 16)
 				and		r12, r6, #(0xff << 24)
-				mov		r4, r4, lsr#15
-				mov		r12, r12, lsr#23
+				mov		r4, r4, lsr #15
+				mov		r12, r12, lsr #23
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
 				cmp		r2, r10
@@ -448,7 +449,7 @@ putyed_gie:		add		r5, r5, #1
 				str		r8, [r0, #S_DST]
 				str		r5, [r0, #S_Y]
 				ldmia	sp!, {r4 - r11, pc}
-pal16_gie:		.long 		np2_pal16 + (NP2PAL_GRPH * 2)
+pal16_gie:		.long 	np2_pal16 + (NP2PAL_GRPH * 2)
 
 
 sdraw16p_2ie:	stmdb	sp!, {r4 - r11, lr}
@@ -473,8 +474,8 @@ putylp_2ie:		ldrb	r12, [r0, r4]
 putexlp_2ie:		orr		lr, lr, r12
 				and		r5, lr, #0xff
 				and		r12, lr, #(0xff << 8)
-				mov		r5, r5, lsl#1
-				mov		r12, r12, lsr#7
+				mov		r5, r5, lsl #1
+				mov		r12, r12, lsr #7
 				ldrh	r5, [r5, r11]
 				ldrh	r12, [r12, r11]
 				add		r2, r2, #4
@@ -510,23 +511,23 @@ putoxlp_2ie:		ldr		r12, [r2, r7]
 				moveq	r5, r5, lsl #1
 					ands	r6, lr, #(0xf0 << 8)
 				ldrh	r5, [r5, r11]
-					movne	r6, r6, lsr#11
+					movne	r6, r6, lsr #11
 					subne	r6, r6, #(NP2PALS_TXT << 1)
-					moveq	r6, r12, lsr#7
+					moveq	r6, r12, lsr #7
 					andeq	r6, r6, #(0x0f << 1)
 				strh	r5, [r9], r3
 				ands	r5, lr, #(0xf0 << 16)
 					ldrh	r6, [r6, r11]
 				movne	r5, r5, lsr #19
 				subne	r5, r5, #(NP2PALS_TXT << 1)
-				moveq	r5, r12, lsr#15
+				moveq	r5, r12, lsr #15
 				andeq	r5, r5, #(0x0f << 1)
 					strh	r6, [r9], r3
 					ands	r6, lr, #(0xf0 << 24)
 				ldrh	r5, [r5, r11]
-					movne	r6, r6, lsr#27
+					movne	r6, r6, lsr #27
 					subne	r6, r6, #(NP2PALS_TXT << 1)
-					moveq	r6, r12, lsr#23
+					moveq	r6, r12, lsr #23
 					andeq	r6, r6, #(0x0f << 1)
 					ldrh	r6, [r6, r11]
 				strh	r5, [r9], r3
@@ -550,7 +551,7 @@ putyed_2ie:		add		r4, r4, #1
 				str		r9, [r0, #S_DST]
 				str		r4, [r0, #S_Y]
 				ldmia	sp!, {r4 - r11, pc}
-pal16_2ie:		.long 		np2_pal16 + (NP2PAL_GRPH * 2)
+pal16_2ie:		.long 	np2_pal16 + (NP2PAL_GRPH * 2)
 
 sdraw16p_1d:		stmdb	sp!, {r4 - r11, lr}
 				add		r0, r0, #S_HDRSIZE
@@ -570,8 +571,8 @@ putylp_1d:		cmp		r12, #0
 				mov		r2, #0
 putxlp_1d:		and		r4, r6, #0xff
 				and		r12, r6, #(0xff << 8)
-				mov		r4, r4, lsl#1
-				mov		r12, r12, lsr#7
+				mov		r4, r4, lsl #1
+				mov		r12, r12, lsr #7
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
 				strh	r4, [r8], r3
@@ -581,8 +582,8 @@ putxlp_1d:		and		r4, r6, #0xff
 				add		r2, r2, #4
 				and		r4, r6, #(0xff << 16)
 				and		r12, r6, #(0xff << 24)
-				mov		r4, r4, lsr#15
-				mov		r12, r12, lsr#23
+				mov		r4, r4, lsr #15
+				mov		r12, r12, lsr #23
 				ldrh	r4, [r4, r11]
 				ldrh	r12, [r12, r11]
 				cmp		r2, r10
@@ -595,7 +596,7 @@ putxlp_1d:		and		r4, r6, #0xff
 				ldr		r8, [r0, #S_DST]
 putyed_1d:		add		r5, r5, #1
 				add		r7, r7, #SURFACE_WIDTH
-				add		r8, r8, lr, lsl#1
+				add		r8, r8, lr, lsl #1
 				cmp		r5, r1
 				ldrccb	r12, [r5, r0]
 				bcc		putylp_1d
@@ -603,7 +604,7 @@ putyed_1d:		add		r5, r5, #1
 				str		r8, [r0, #S_DST]
 				str		r5, [r0, #S_Y]
 				ldmia	sp!, {r4 - r11, pc}
-pal16_1d:		.long 		np2_pal16 + (NP2PAL_GRPH * 2)
+pal16_1d:		.long 	np2_pal16 + (NP2PAL_GRPH * 2)
 
 sdraw16p_2d:		stmdb	sp!, {r4 - r11, lr}
 				add		r0, r0, #S_HDRSIZE
@@ -626,8 +627,8 @@ putylp_2d:		cmp		r12, #0
 putxlp_2d:		orr		lr, lr, r12
 				and		r5, lr, #0xff
 				and		r12, lr, #(0xff << 8)
-				mov		r5, r5, lsl#1
-				mov		r12, r12, lsr#7
+				mov		r5, r5, lsl #1
+				mov		r12, r12, lsr #7
 				ldrh	r5, [r5, r11]
 				ldrh	r12, [r12, r11]
 				add		r2, r2, #4
@@ -637,8 +638,8 @@ putxlp_2d:		orr		lr, lr, r12
 				strh	r12, [r6], r3
 				and		r5, lr, #(0xff << 16)
 				and		r12, lr, #(0xff << 24)
-				mov		r5, r5, lsr#15
-				mov		r12, r12, lsr#23
+				mov		r5, r5, lsr #15
+				mov		r12, r12, lsr #23
 				ldrh	r5, [r5, r11]
 				ldrh	r12, [r12, r11]
 				cmp		r2, r10
@@ -654,7 +655,7 @@ putxlp_2d:		orr		lr, lr, r12
 putyed_2d:		add		r4, r4, #1
 				add		r7, r7, #SURFACE_WIDTH
 				add		r8, r8, #SURFACE_WIDTH
-				add		r9, r9, r5, lsl#1
+				add		r9, r9, r5, lsl #1
 				cmp		r4, r1
 				ldrccb	r12, [r4, r0]
 				bcc		putylp_2d
@@ -663,28 +664,28 @@ putyed_2d:		add		r4, r4, #1
 				str		r9, [r0, #S_DST]
 				str		r4, [r0, #S_Y]
 				ldmia	sp!, {r4 - r11, pc}
-pal16_2d:		.long 		np2_pal16 + (NP2PAL_GRPH * 2)
+pal16_2d:		.long 	np2_pal16 + (NP2PAL_GRPH * 2)
 
 
 sdraw_getproctbl:
 				mov		r0, pc
 				mov		pc, lr
-				.long 		sdraw16p_0
-				.long 		sdraw16p_1
-				.long 		sdraw16p_1
-				.long 		sdraw16p_2
-				.long 		sdraw16p_0
-				.long 		sdraw16p_ti
-				.long 		sdraw16p_gi
-				.long 		sdraw16p_2i
-				.long 		sdraw16p_0
-				.long 		sdraw16p_ti
-				.long 		sdraw16p_gie
-				.long 		sdraw16p_2ie
-				.long 		sdraw16p_0
-				.long 		sdraw16p_1d
-				.long 		sdraw16p_1d
-				.long 		sdraw16p_2d
+				.long 	sdraw16p_0
+				.long 	sdraw16p_1
+				.long 	sdraw16p_1
+				.long 	sdraw16p_2
+				.long 	sdraw16p_0
+				.long 	sdraw16p_ti
+				.long 	sdraw16p_gi
+				.long 	sdraw16p_2i
+				.long 	sdraw16p_0
+				.long 	sdraw16p_ti
+				.long 	sdraw16p_gie
+				.long 	sdraw16p_2ie
+				.long 	sdraw16p_0
+				.long 	sdraw16p_1d
+				.long 	sdraw16p_1d
+				.long 	sdraw16p_2d
 
 
 	.section	.note.GNU-stack,"",%progbits

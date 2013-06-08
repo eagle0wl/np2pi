@@ -328,7 +328,7 @@ twwto_main		mov		r2, r0
 				mov		r0, #1
 				orr		r1, r1, #1
 				strb	r0, [r2, r12 lsr #(32 - 12)]
-				add		r12, r12, #(1 << (32 - 12))]
+				add		r12, r12, #(1 << (32 - 12))
 				strb	r1, [r3, #GDCS_TEXTDISP]
 				strb	r0, [r2, r12 lsr #(32 - 12)]
 				mov		pc, lr

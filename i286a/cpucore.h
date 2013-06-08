@@ -283,6 +283,7 @@ void i286a_step(void);
 #define	CPU_EXTMEM		i286acore.e.ext
 #define	CPU_EXTMEMSIZE	i286acore.e.extsize
 #define	CPU_INPADRS		i286acore.e.inport
+#define	CPU_EMSPTR		i286acore.e.ems
 
 #define	CPU_TYPE		i286acore.s.cpu_type
 

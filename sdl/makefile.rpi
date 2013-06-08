@@ -10,13 +10,14 @@ RM		= rm -f
 
 OBJBASE	= ../obj
 OBJ		= $(OBJBASE)/raspberrypi
+COREOBJ = ../i286a/gas
 
 BIN		= ../bin
 
 BASE		= ..
 COMMON		= ../common
 CODECNV		= ../codecnv
-I286C		= ../i286c
+I286C		= ../i286a
 MEM			= ../mem
 IO			= ../io
 CBUS		= ../cbus
@@ -81,10 +82,19 @@ NP2OBJ	=	$(OBJ)/strres.o		$(OBJ)/milstr.o		$(OBJ)/_memory.o	\
 			$(OBJ)/lstarray.o	$(OBJ)/bmpdata.o	$(OBJ)/parts.o		\
 			$(OBJ)/resize.o												\
 			$(OBJ)/sjiseuc.o	$(OBJ)/eucsjis.o	$(OBJ)/utf8ucs2.o	\
-			$(OBJ)/i286c.o		$(OBJ)/i286c_mn.o	$(OBJ)/i286c_ea.o	\
-			$(OBJ)/i286c_0f.o	$(OBJ)/i286c_8x.o	$(OBJ)/i286c_sf.o	\
-			$(OBJ)/i286c_f6.o	$(OBJ)/i286c_fe.o	$(OBJ)/i286c_rp.o	\
-			$(OBJ)/v30patch.o	$(OBJ)/memory.o							\
+			$(COREOBJ)/i286a_0f.o	\
+			$(COREOBJ)/i286a_8x.o	\
+			$(COREOBJ)/i286a_ea.o	\
+			$(COREOBJ)/i286a_f6.o	\
+			$(COREOBJ)/i286a_fe.o	\
+			$(COREOBJ)/i286a_i.o	\
+			$(COREOBJ)/i286a_mn.o	\
+			$(COREOBJ)/i286a_rp.o	\
+			$(COREOBJ)/i286a_sf.o	\
+			$(COREOBJ)/memorya.o	\
+			$(COREOBJ)/memoryd.o	\
+			$(OBJ)/memory.o	\
+			$(OBJ)/i286a.o	\
 			$(OBJ)/dmax86.o		$(OBJ)/dmav30.o		$(OBJ)/memtram.o	\
 			$(OBJ)/memvram.o	$(OBJ)/memegc.o		$(OBJ)/memems.o		\
 			$(OBJ)/memepp.o												\
@@ -271,6 +281,9 @@ $(OBJ)/memory.o		:	$(I286C)/memory.c $(HEADERS) $(CPUCORES) $(PCCORES) \
 						$(FONT)/font.h
 	$(CC) $(COPT) -o $@ $<
 
+$(OBJ)/i286a.o		:	$(I286C)/i286a.c $(HEADERS) $(CPUCORES) $(PCCORES) \
+						$(IOCORES)
+	$(CC) $(COPT) -o $@ $<
 
 
 $(OBJ)/dmax86.o		:	$(MEM)/dmax86.c $(HEADERS) $(CPUCORES) $(PCCORES) \

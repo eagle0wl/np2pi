@@ -1,6 +1,7 @@
 @ This file was created from a .asm file
 @  using the ads2gas.pl script.
 	.equ DO1STROUNDING, 0
+.altmacro
 
 .equ FMDIV_BITS		, 		8
 .equ FMDIV_ENT		, 		(1 << FMDIV_BITS)
@@ -119,8 +120,8 @@
 @ r11	opncfg Fix
 @ r12	Temporary Register
 
-.macro SLTFREQ label,	o, upd
-\label:		ldr		r3, [r6, #(\o + S1_ENV_INC)]	@ calc env
+.macro SLTFREQ	o, upd
+			ldr		r3, [r6, #(\o + S1_ENV_INC)]	@ calc env
 			ldr		r4, [r6, #(\o + S1_ENV_CNT)]
 			ldr		r12, [r6, #(\o + S1_ENV_END)]
 			@
@@ -129,8 +130,8 @@
 			bcs		\upd
 	.endm
 
-.macro SLTOUT label,	o, fd, cn
-\label:		mov		r4, r3, lsr #ENV_BITS
+.macro SLTOUT	o, fd, cn
+			mov		r4, r3, lsr #ENV_BITS
 			subs	r12, r4, #EVC_ENT
 			addcc	r12, r11, #T_envcurve			@ r12 = opntbl.envcurve
 			ldr		r0, [r6, #(\o + S1_TOTALLEVEL)]
@@ -142,7 +143,8 @@
 			ldr		r12, [r10, \fd]
 			add		r3, r3, r4
 			str		r3, [r6, #(\o + S1_FREQ_CNT)]
-			bls		ed\label
+LOCAL label_ed
+			bls		label_ed
 			add		r3, r3, r12
 			add		r0, r11, r0, lsl #2
 			mov		r3, r3, lsl #(32 - FREQ_BITS)
@@ -156,44 +158,49 @@
 			@
 			add		r12, r12, r0, asr #(ENVTBL_BIT + SINTBL_BIT - TL_BITS)
 			str		r12, [r4]
-ed\label:
+label_ed:
 	.endm
 
 
-.macro SLTUPD label,	r, o, m
-\label:		ldrb	r3, [r6, #(\o + S1_ENV_MODE)]
+.macro SLTUPD	r, o, m
+			ldrb	r3, [r6, #(\o + S1_ENV_MODE)]
 			@
 			@
 			sub		r3, r3, #1
 			cmp		r3, #EM_ATTACK
 			addcc	pc, pc, r3, lsl #2
-			b		off\label					@ EM_OFF
-			b		rel\label					@ EM_RELEASE
-			b		dc2\label					@ EM_DECAY2
-			b		dc1\label					@ EM_DECAY1
-att\label:	strb	r3, [r6, #(\o + S1_ENV_MODE)]
+LOCAL label_off
+			b		label_off					@ EM_OFF
+LOCAL label_rel
+			b		label_rel					@ EM_RELEASE
+LOCAL label_dc2
+			b		label_dc2					@ EM_DECAY2
+LOCAL label_dc1
+			b		label_dc1					@ EM_DECAY1
+LOCAL label_att
+label_att:	strb	r3, [r6, #(\o + S1_ENV_MODE)]
 			ldr		r0, [r6, #(\o + S1_DECAYLEVEL)]
 			ldr		r4, [r6, #(\o + S1_ENVINCDECAY1)]
 			mov		r3, #EC_DECAY
 			str		r0, [r6, #(\o + S1_ENV_END)]
 			str		r4, [r6, #(\o + S1_ENV_INC)]
 			b		\r
-dc1\label:	strb	r3, [r6, #(\o + S1_ENV_MODE)]
+label_dc1:	strb	r3, [r6, #(\o + S1_ENV_MODE)]
 			mov		r0, #EC_OFF
 			ldr		r4, [r6, #(\o + S1_ENVINCDECAY2)]
 			ldr		r3, [r6, #(\o + S1_DECAYLEVEL)]
 			str		r0, [r6, #(\o + S1_ENV_END)]
 			str		r4, [r6, #(\o + S1_ENV_INC)]
 			b		\r
-rel\label:	strb	r3, [r6, #(\o + S1_ENV_MODE)]
-dc2\label:	add		r3, r12, #1
+label_rel:	strb	r3, [r6, #(\o + S1_ENV_MODE)]
+label_dc2:	add		r3, r12, #1
 			ldrb	r4, [r6, #C_PLAYING]
 			mov		r0, #0
 			str		r3, [r6, #(\o + S1_ENV_END)]
 			str		r0, [r6, #(\o + S1_ENV_INC)]
 			and		r4, r4, \m
 			strb	r4, [r6, #C_PLAYING]
-off\label:	mov		r3, #EC_OFF
+label_off:	mov		r3, #EC_OFF
 			b		\r
 	.endm
 
@@ -236,7 +243,7 @@ slotcalc_lp:		ldrb	r0, [r6, #C_PLAYING]
 				str		r12, [r10, #G_FEEDBACK3]
 				str		r12, [r10, #G_FEEDBACK4]
 
-	SLTFREQ slot1calc, 	0, slot1update
+slot1calc:		SLTFREQ	0, slot1update
 s1calcenv:		mov		r12, r3, lsr #ENV_BITS
 				subs	r4, r12, #EVC_ENT
 				addcc	r4, r11, #T_envcurve		@ r4 = opntbl.envcurve
@@ -274,14 +281,14 @@ s1calcenv:		mov		r12, r3, lsr #ENV_BITS
 				addne	r0, r0, r3
 				strne	r0, [r4]
 
-	SLTFREQ slot2calc, 	(S_SIZE * 1), slot2update
-	SLTOUT s2calcenv, 	(S_SIZE * 1), #G_FEEDBACK2, #C_CONNECT2
+slot2calc:		SLTFREQ	(S_SIZE * 1), slot2update
+s2calcenv:		SLTOUT	(S_SIZE * 1), #G_FEEDBACK2, #C_CONNECT2
 
-	SLTFREQ slot3calc, 	(S_SIZE * 2), slot3update
-	SLTOUT s3calcenv, 	(S_SIZE * 2), #G_FEEDBACK3, #C_CONNECT3
+slot3calc:		SLTFREQ	(S_SIZE * 2), slot3update
+s3calcenv:		SLTOUT	(S_SIZE * 2), #G_FEEDBACK3, #C_CONNECT3
 
-	SLTFREQ slot4calc, 	(S_SIZE * 3), slot4update
-	SLTOUT s4calcenv, 	(S_SIZE * 3), #G_FEEDBACK4, #C_CONNECT4
+slot4calc:		SLTFREQ	(S_SIZE * 3), slot4update
+s4calcenv:		SLTOUT	(S_SIZE * 3), #G_FEEDBACK4, #C_CONNECT4
 
 slot5calc:		add		r6, r6, #C_SIZE
 				adds	r5, r5, #256
@@ -322,10 +329,10 @@ dcd_opngen:		.long 	opngen
 dcd_opnch:		.long 	opnch
 dcd_opncfg:		.long 	opncfg + T_ORG
 
-	SLTUPD slot1update, 	s1calcenv, (S_SIZE * 0), #0xfe
-	SLTUPD slot2update, 	s2calcenv, (S_SIZE * 1), #0xfd
-	SLTUPD slot3update, 	s3calcenv, (S_SIZE * 2), #0xfb
-	SLTUPD slot4update, 	s4calcenv, (S_SIZE * 3), #0xf7
+slot1update:		SLTUPD	s1calcenv, (S_SIZE * 0), #0xfe
+slot2update:		SLTUPD	s2calcenv, (S_SIZE * 1), #0xfd
+slot3update:		SLTUPD	s3calcenv, (S_SIZE * 2), #0xfb
+slot4update:		SLTUPD	s4calcenv, (S_SIZE * 3), #0xf7
 
 
 	.section	.note.GNU-stack,"",%progbits

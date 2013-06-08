@@ -1,6 +1,7 @@
 @ This file was created from a .asm file
 @  using the ads2gas.pl script.
 	.equ DO1STROUNDING, 0
+.altmacro
 
 .equ PSGFREQPADBIT	, 		12
 .equ PSGADDEDBIT		, 		3
@@ -65,60 +66,68 @@
 .p2align 2
 
 
-.macro PSGCALC label,	o, t, n
-\label:		ldr		r12, [r0, #(\o + T_PVOL)]
+.macro PSGCALC	o, t, n
+			ldr		r12, [r0, #(\o + T_PVOL)]
 			tst		r10, \t
 			mov		r3, #0
 			ldr		r12, [r12]
-			beq		n\label
+LOCAL label_n
+			beq		label_n
 			cmp		r12, #0
-			beq		ed\label
+LOCAL label_ed
+			beq		label_ed
 			ldr		r4, [r0, #(\o + T_COUNT)]
 			ldr		r5, [r0, #(\o + T_FREQ)]
 			tst		r10, \n
-			bne		tn\label
+LOCAL label_tn
+			bne		label_tn
 			mov		r6, #PSGADDEDCNT
-tlp\label:	adds	r4, r4, r5
+LOCAL label_tlp
+label_tlp:	adds	r4, r4, r5
 			addpl	r3, r3, r12
 			submi	r3, r3, r12
 			subs	r6, r6, #1
-			bne		tlp\label
+			bne		label_tlp
 			str		r4, [r0, #(\o + T_COUNT)]
 			ldrb	r6, [r0, #(\o + T_PAN)]
-			b		pan\label
-tn\label:	add		r6, r9, #1
-tnlp\label:	add		r4, r4, r5
+LOCAL label_pan
+			b		label_pan
+label_tn:	add		r6, r9, #1
+LOCAL label_tnlp
+label_tnlp:	add		r4, r4, r5
 			tst		r4, r6
 			addpl	r3, r3, r12
 			submi	r3, r3, r12
-			mov		r6, r6, lsl#1
+			mov		r6, r6, lsl #1
 			tst		r6, #(1 << PSGADDEDCNT)
-			beq		tnlp\label
+			beq		label_tnlp
 			str		r4, [r0, #(\o + T_COUNT)]
 			ldrb	r6, [r0, #(\o + T_PAN)]
-			b		pan\label
-n\label:	cmp		r12, #0
-			beq		ed\label
+			b		label_pan
+label_n:	cmp		r12, #0
+			beq		label_ed
 			tst		r10, \n
-			bne		nmn\label
+LOCAL label_nmn
+			bne		label_nmn
 			ldrb	r4, [r0, #(\o + T_PUCHI)]
 			ldrb	r6, [r0, #(\o + T_PAN)]
 			subs	r4, r4, #1
 			strcsb	r4, [r0, #(\o + T_PUCHI)]
-			addcs	r3, r3, r12, lsl#PSGADDEDBIT
-			b		pan\label
-nmn\label:	mov		r4, #(1 << (32 - PSGADDEDCNT))
+			addcs	r3, r3, r12, lsl #PSGADDEDBIT
+			b		label_pan
+label_nmn:	mov		r4, #(1 << (32 - PSGADDEDCNT))
 			ldrb	r6, [r0, #(\o + T_PAN)]
-nlp\label:	tst		r4, r9
+LOCAL label_nlp
+label_nlp:	tst		r4, r9
 			addeq	r3, r3, r12
 			subne	r3, r3, r12
-			movs	r4, r4, lsl#1
-			bne		nlp\label
-pan\label:	tst		r6, #1
+			movs	r4, r4, lsl #1
+			bne		label_nlp
+label_pan:	tst		r6, #1
 			addeq	r7, r7, r3
 			tst		r6, #2
 			addeq	r8, r8, r3
-ed\label:
+label_ed:
 	.endm
 
 
@@ -157,10 +166,10 @@ calcenvcyc:		bic		r10, r10, #(240 << 24)
 				tst		r10, #(PSGENV_ONECYCLE << 8)
 				eoreq	r10, r10, #(PSGENV_INC << 8)
 calcenvnext:		ldrh	lr, [r0, #P_ENVMAX]
-				eor		r3, r10, r10, lsr#16
+				eor		r3, r10, r10, lsr #16
 				and		r3, r3, #(15 << 8)
-				ldr		r6, [r11, r3, lsr#(8 - 2)]
-				orr		r10, r10, r3, lsl#8
+				ldr		r6, [r11, r3, lsr #(8 - 2)]
+				orr		r10, r10, r3, lsl #8
 calcenvvstr:		str		r6, [r0, #P_EVOL]
 calcenvstr:		str		r10, [r0, #P_MIXER]
 
@@ -173,7 +182,7 @@ makenoise:		tst		r10, #0x38
 				mov		r3, #PSGADDEDCNT
 mknoise_lp:		subs	r7, r7, r6
 				bcc		updatenoise
-updatenoiseret:	add		r9, r8, r9, lsl#1
+updatenoiseret:	add		r9, r8, r9, lsl #1
 				subs	r3, r3, #1
 				bne		mknoise_lp
 				str		r7, [r0, #PN_COUNT]
@@ -181,9 +190,9 @@ updatenoiseret:	add		r9, r8, r9, lsl#1
 makesamp:		mov		r7, #0
 				mov		r8, #0
 
-	PSGCALC psgcalc0, 	(T_SIZE * 0), #0x01, #0x08
-	PSGCALC psgcalc1, 	(T_SIZE * 1), #0x02, #0x10
-	PSGCALC psgcalc2, 	(T_SIZE * 2), #0x04, #0x20
+psgcalc0:		PSGCALC	(T_SIZE * 0), #0x01, #0x08
+psgcalc1:		PSGCALC	(T_SIZE * 1), #0x02, #0x10
+psgcalc2:		PSGCALC	(T_SIZE * 2), #0x04, #0x20
 
 				ldr		r4, [r1]
 				ldr		r3, [r1, #4]

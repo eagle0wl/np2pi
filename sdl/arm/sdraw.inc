@@ -1,6 +1,7 @@
 @ This file was created from a .asm file
 @  using the ads2gas.pl script.
 	.equ DO1STROUNDING, 0
+.altmacro
 
 .equ NP2PALS_TXT		, 		10
 .equ NP2PALS_GRPH	, 		16

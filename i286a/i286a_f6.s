@@ -11,8 +11,8 @@
 	IMPORT		i286a_memorywrite_w
 	IMPORT		i286a_localint
 
-	IMPORT		__imp___rt_udiv
-	IMPORT		__imp___rt_sdiv
+	IMPORT		__aeabi_uidiv
+	IMPORT		__aeabi_idiv
 
 	EXPORT		i286aopf6
 	EXPORT		i286aopf7
@@ -113,7 +113,7 @@ div8e			cmp		r0, #0
 				strb	r0, [r9, #CPU_AL]
 				strb	r1, [r9, #CPU_AH]
 				mov		pc, r11
-div8e_div		dcd		__imp___rt_udiv
+div8e_div		dcd		__aeabi_uidiv
 div8intr		sub		r8, r6, #(2 << 16)
 				mov		r6, #0
 				b		i286a_localint
@@ -142,7 +142,7 @@ idiv8e			movs	r0, r0, lsl #24
 				strb	r0, [r9, #CPU_AL]
 				strb	r1, [r9, #CPU_AH]
 				mov		pc, r11
-idiv8e_div		dcd		__imp___rt_sdiv
+idiv8e_div		dcd		__aeabi_idiv
 
 
 ; ----
@@ -253,7 +253,7 @@ div16e			cmp		r0, #0
 				strh	r0, [r9, #CPU_AX]
 				strh	r1, [r9, #CPU_DX]
 				mov		pc, r11
-div16e_div		dcd		__imp___rt_udiv
+div16e_div		dcd		__aeabi_uidiv
 div16intr		sub		r8, r6, #(2 << 16)
 				mov		r6, #0
 				b		i286a_localint
@@ -284,7 +284,7 @@ idiv16e			movs	r0, r0, lsl #16
 				strh	r0, [r9, #CPU_AX]
 				strh	r1, [r9, #CPU_DX]
 				mov		pc, r11
-idiv16e_div		dcd		__imp___rt_sdiv
+idiv16e_div		dcd		__aeabi_idiv
 
 	END
 
