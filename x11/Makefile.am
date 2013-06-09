@@ -288,22 +288,20 @@ AM_CPPFLAGS+=	-I$(real_topsrcdir)/i386c \
 		-I$(real_topsrcdir)/i386c/ia32/instructions \
 		-I$(real_topsrcdir)/i386c/ia32/instructions/fpu
 else
-xnp2_SOURCES+=	$(real_topsrcdir)/i286a/i286a.c \
-		$(real_topsrcdir)/i286a/gas/i286a_0f.s \
-		$(real_topsrcdir)/i286a/gas/i286a_8x.s \
-		$(real_topsrcdir)/i286a/gas/i286a_ea.s \
-		$(real_topsrcdir)/i286a/gas/i286a_f6.s \
-		$(real_topsrcdir)/i286a/gas/i286a_fe.s \
-		$(real_topsrcdir)/i286a/gas/i286a_i.s \
-		$(real_topsrcdir)/i286a/gas/i286a_mn.s \
-		$(real_topsrcdir)/i286a/gas/i286a_rp.s \
-		$(real_topsrcdir)/i286a/gas/i286a_sf.s \
-		$(real_topsrcdir)/i286a/memory.c \
-		$(real_topsrcdir)/i286a/gas/memorya.s \
-		$(real_topsrcdir)/i286a/gas/memoryd.s \
+xnp2_SOURCES+=	$(real_topsrcdir)/i286c/i286c.c \
+		$(real_topsrcdir)/i286c/i286c_mn.c \
+		$(real_topsrcdir)/i286c/i286c_ea.c \
+		$(real_topsrcdir)/i286c/i286c_0f.c \
+		$(real_topsrcdir)/i286c/i286c_8x.c \
+		$(real_topsrcdir)/i286c/i286c_sf.c \
+		$(real_topsrcdir)/i286c/i286c_f6.c \
+		$(real_topsrcdir)/i286c/i286c_fe.c \
+		$(real_topsrcdir)/i286c/i286c_rp.c \
+		$(real_topsrcdir)/i286c/memory.c \
+		$(real_topsrcdir)/i286c/v30patch.c \
 		$(real_topsrcdir)/debugsub.c
 
-AM_CPPFLAGS+=	-I$(real_topsrcdir)/i286a
+AM_CPPFLAGS+=	-I$(real_topsrcdir)/i286c
 endif
 
 CLEANFILES+=	make.log
