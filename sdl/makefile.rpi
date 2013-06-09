@@ -756,14 +756,8 @@ $(OBJ)/maketgrp.o	:	$(VRAM)/maketgrp.c $(HEADERS) $(CPUCORES) $(PCCORES) \
 						$(VRAM)/makegrph.h $(VRAM)/makegrph.mcr $(FONT)/font.h
 	$(CC) $(COPT) -o $@ $<
 
-$(OBJ)/makegrph.o	:	$(VRAM)/makegrph.c $(HEADERS) $(CPUCORES) $(PCCORES) \
-						$(IOCORES) $(VRAM)/vram.h $(VRAM)/scrndraw.h \
-						$(VRAM)/dispsync.h $(VRAM)/makegrph.h \
-						$(VRAM)/makegrph.mcr
-	$(CC) $(COPT) -o $@ $<
-
-$(OBJ)/makegrph.oa	:	$(X86ASM)/makegrph.x86
-	$(AS) $(AOPT) $< -o $@
+$(OBJ)/makegrph.o	:	$(ARM)/makegrph.s $(I286INCS)
+	$(AS) $(AOPT) -o $@ $<
 
 $(OBJ)/scrnbmp.o	:	$(VRAM)/scrnbmp.c $(HEADERS) $(PCCORES) $(IOCORES) \
 						$(COMMON)/bmpdata.h $(VRAM)/scrndraw.h \
