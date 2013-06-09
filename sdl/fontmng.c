@@ -143,7 +143,12 @@ static BOOL fdatgetcache(FNTMNG fhdl, const char *string, FNTDAT *pfdat) {
 
 	r = FALSE;
 
+#if defined(OSLANG_UTF8)
 	codecnv_utf8toucs2(&str, 1, string, milstr_charsize(string));
+#else
+	str = string[0] & 0xff;
+	str |= (string[1] & 0xff) << 8;
+#endif
 
 	fct = fhdl->cache;
 	cnt = fhdl->caches;
@@ -221,7 +226,11 @@ static void getlength1(FNTMNG fhdl, FNTDAT fdat,
 	SDL_Surface	*text;
 
 	if (fhdl->fonttype & FDAT_PROPORTIONAL) {
+#if defined(OSLANG_UTF8)
 		codecnv_utf8toucs2(utext, NELEMENTS(utext), string, length);
+#else
+		codecnv_euctoucs2(utext, NELEMENTS(utext), string, length);
+#endif
 		text = TTF_RenderUNICODE_Solid(fhdl->ttf_font, utext, white);
 		setfdathead(fhdl, fdat, length, text);
 		if (text) {
@@ -263,7 +272,11 @@ static void getfont1(FNTMNG fhdl, FNTDAT fdat,
 	int			y;
 	int			depth;
 
+#if defined(OSLANG_UTF8)
 	codecnv_utf8toucs2(utext, NELEMENTS(utext), string, length);
+#else
+	codecnv_euctoucs2(utext, NELEMENTS(utext), string, length);
+#endif
 	text = TTF_RenderUNICODE_Solid(fhdl->ttf_font, utext, white);
 	setfdathead(fhdl, fdat, length, text);
 	dst = (UINT8 *)(fdat + 1);
