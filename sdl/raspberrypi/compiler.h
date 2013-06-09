@@ -139,3 +139,5 @@ typedef	unsigned char	BYTE;
 #define	SUPPORT_SCSI
 
 #define	SCREEN_BPP		16
+
+#define NO_DOUBLEBUF
