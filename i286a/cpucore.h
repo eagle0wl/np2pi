@@ -307,6 +307,7 @@ void i286a_step(void);
 #define	CPU_INTERRUPT(vect, soft)	i286a_interrupt(vect)
 #define	CPU_EXEC					i286a
 #define	CPU_EXECV30					i286a
+#define CPU_STEPEXEC				i286a_step
 #define	CPU_SHUT					i286a_shut
 #define	CPU_SETEXTSIZE(size)		i286a_setextsize((UINT32)(size) << 20)
 #define	CPU_SETEMM(frame, addr)		i286a_setemm(frame, addr)

@@ -130,6 +130,8 @@ typedef	unsigned char	BYTE;
 #define	SOUNDRESERVE	100
 #define	OPNGENARM
 
+#define	CPUSTRUC_MEMWAIT
+
 #define	SUPPORT_CRT15KHZ
 #define	SUPPORT_HOSTDRV
 #define	SUPPORT_SWSEEKSND

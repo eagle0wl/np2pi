@@ -261,6 +261,8 @@ UINT32 gettick(void);
 #define	USE_SDL_JOYSTICK
 #endif	/* USE_SDLAUDIO || USE_SDLMIXER */
 
+#define	CPUSTRUC_MEMWAIT
+
 /*
  * You could specify a complete path, e.g. "/etc/timidity.cfg", and
  * then specify the library directory in the configuration file.

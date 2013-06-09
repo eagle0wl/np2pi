@@ -300,7 +300,8 @@ xnp2_SOURCES+=	$(real_topsrcdir)/i286a/i286a.c \
 		$(real_topsrcdir)/i286a/gas/i286a_sf.s \
 		$(real_topsrcdir)/i286a/memory.c \
 		$(real_topsrcdir)/i286a/gas/memorya.s \
-		$(real_topsrcdir)/i286a/gas/memoryd.s
+		$(real_topsrcdir)/i286a/gas/memoryd.s \
+		$(real_topsrcdir)/debugsub.c
 
 AM_CPPFLAGS+=	-I$(real_topsrcdir)/i286a
 endif
