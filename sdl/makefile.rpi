@@ -525,14 +525,14 @@ $(OBJ)/cs4231io.o	:	$(CBUS)/cs4231io.c $(HEADERS) $(CPUCORES) $(PCCORES) \
 	$(CC) $(COPT) -o $@ $<
 
 
-
+# -fno-tree-vectorize to avoid internal compiler error in gcc 4.6
 $(OBJ)/bios.o		:	$(BIOS)/bios.c $(HEADERS) $(CPUCORES) $(PCCORES) \
 						$(IOCORES) $(TARGET)/dosio.h $(BIOS)/bios.h \
 						$(BIOS)/biosmem.h $(BIOS)/fdfmt.h \
 						$(BIOS)/keytable.res $(BIOS)/itfrom.res \
 						$(BIOS)/startup.res $(BIOS)/biosfd80.res \
 						$(LIO)/lio.h $(FDD)/fddfile.h $(FDD)/fdd_mtr.h
-	$(CC) $(COPT) -o $@ $<
+	$(CC) $(COPT) -fno-tree-vectorize -o $@ $<
 
 $(OBJ)/bios09.o		:	$(BIOS)/bios09.c $(HEADERS) $(CPUCORES) $(PCCORES) \
 						$(IOCORES) $(BIOS)/bios.h $(BIOS)/biosmem.h
