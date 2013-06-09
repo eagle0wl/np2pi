@@ -10,7 +10,6 @@ RM		= rm -f
 
 OBJBASE	= ../obj
 OBJ		= $(OBJBASE)/raspberrypi
-COREOBJ = ../i286a/gas
 
 BIN		= ../bin
 
@@ -18,6 +17,7 @@ BASE		= ..
 COMMON		= ../common
 CODECNV		= ../codecnv
 I286C		= ../i286a
+I286AG		= ../i286a/gas
 MEM			= ../mem
 IO			= ../io
 CBUS		= ../cbus
@@ -67,6 +67,10 @@ EMBEDS		=	$(EMBED)/vramhdl.h $(EMBED)/vrammix.h \
 				$(MENUBASE)/menusys.h $(MENUBASE)/menudlg.h \
 				$(MENUBASE)/menumbox.h $(MENUBASE)/menures.h
 
+I286INCS	=	$(I286AG)/i286a.inc $(I286AG)/i286aalu.inc \
+				$(I286AG)/i286aea.inc $(I286AG)/i286aio.inc \
+				$(I286AG)/i286amem.inc $(I286AG)/i286aop.inc \
+				$(I286AG)/i286asft.inc
 
 COPT	= -c -Wall -pipe -O3 -Wpointer-arith -fno-exceptions \
 			-fomit-frame-pointer -fsigned-char \
@@ -74,7 +78,7 @@ COPT	= -c -Wall -pipe -O3 -Wpointer-arith -fno-exceptions \
 			-I$(CBUS) -I$(BIOS) -I$(LIO) -I$(VRAM) -I$(SOUND) -I$(VERMOUTH) \
 			-I$(GETSND) -I$(FDD) -I$(FONT) -I$(GENERIC) -I$(EMBED) -I$(MENU) \
 			-I$(MENUBASE) -I$(TARGET) -I$(TARGET2) $(SDL_CFLAGS)
-AOPT	= -I$(ARM)
+AOPT	= -I$(ARM) -I$(I286AG)
 LOPT	=
 
 NP2OBJ	=	$(OBJ)/strres.o		$(OBJ)/milstr.o		$(OBJ)/_memory.o	\
@@ -82,19 +86,11 @@ NP2OBJ	=	$(OBJ)/strres.o		$(OBJ)/milstr.o		$(OBJ)/_memory.o	\
 			$(OBJ)/lstarray.o	$(OBJ)/bmpdata.o	$(OBJ)/parts.o		\
 			$(OBJ)/resize.o												\
 			$(OBJ)/sjiseuc.o	$(OBJ)/eucsjis.o	$(OBJ)/utf8ucs2.o	\
-			$(COREOBJ)/i286a_0f.o	\
-			$(COREOBJ)/i286a_8x.o	\
-			$(COREOBJ)/i286a_ea.o	\
-			$(COREOBJ)/i286a_f6.o	\
-			$(COREOBJ)/i286a_fe.o	\
-			$(COREOBJ)/i286a_i.o	\
-			$(COREOBJ)/i286a_mn.o	\
-			$(COREOBJ)/i286a_rp.o	\
-			$(COREOBJ)/i286a_sf.o	\
-			$(COREOBJ)/memorya.o	\
-			$(COREOBJ)/memoryd.o	\
-			$(OBJ)/memory.o	\
-			$(OBJ)/i286a.o	\
+			$(OBJ)/i286a_0f.o	$(OBJ)/i286a_8x.o	$(OBJ)/i286a_ea.o	\
+			$(OBJ)/i286a_f6.o	$(OBJ)/i286a_fe.o	$(OBJ)/i286a_i.o	\
+			$(OBJ)/i286a_mn.o	$(OBJ)/i286a_rp.o	$(OBJ)/i286a_sf.o	\
+			$(OBJ)/memorya.o	$(OBJ)/memoryd.o	$(OBJ)/memory.o		\
+			$(OBJ)/i286a.o												\
 			$(OBJ)/dmax86.o		$(OBJ)/dmav30.o		$(OBJ)/memtram.o	\
 			$(OBJ)/memvram.o	$(OBJ)/memegc.o		$(OBJ)/memems.o		\
 			$(OBJ)/memepp.o												\
@@ -285,6 +281,38 @@ $(OBJ)/i286a.o		:	$(I286C)/i286a.c $(HEADERS) $(CPUCORES) $(PCCORES) \
 						$(IOCORES)
 	$(CC) $(COPT) -o $@ $<
 
+$(OBJ)/i286a_0f.o	:	$(I286AG)/i286a_0f.s $(I286INCS)
+	$(AS) $(AOPT) -o $@ $<
+
+$(OBJ)/i286a_8x.o	:	$(I286AG)/i286a_8x.s $(I286INCS)
+	$(AS) $(AOPT) -o $@ $<
+
+$(OBJ)/i286a_ea.o	:	$(I286AG)/i286a_ea.s $(I286INCS)
+	$(AS) $(AOPT) -o $@ $<
+
+$(OBJ)/i286a_f6.o	:	$(I286AG)/i286a_f6.s $(I286INCS)
+	$(AS) $(AOPT) -o $@ $<
+
+$(OBJ)/i286a_fe.o	:	$(I286AG)/i286a_fe.s $(I286INCS)
+	$(AS) $(AOPT) -o $@ $<
+
+$(OBJ)/i286a_i.o	:	$(I286AG)/i286a_i.s $(I286INCS)
+	$(AS) $(AOPT) -o $@ $<
+
+$(OBJ)/i286a_mn.o	:	$(I286AG)/i286a_mn.s $(I286INCS)
+	$(AS) $(AOPT) -o $@ $<
+
+$(OBJ)/i286a_rp.o	:	$(I286AG)/i286a_rp.s $(I286INCS)
+	$(AS) $(AOPT) -o $@ $<
+
+$(OBJ)/i286a_sf.o	:	$(I286AG)/i286a_sf.s $(I286INCS)
+	$(AS) $(AOPT) -o $@ $<
+
+$(OBJ)/memorya.o	:	$(I286AG)/memorya.s $(I286INCS)
+	$(AS) $(AOPT) -o $@ $<
+
+$(OBJ)/memoryd.o	:	$(I286AG)/memoryd.s $(I286INCS)
+	$(AS) $(AOPT) -o $@ $<
 
 $(OBJ)/dmax86.o		:	$(MEM)/dmax86.c $(HEADERS) $(CPUCORES) $(PCCORES) \
 						$(IOCORES) $(MEM)/dmax86.h
