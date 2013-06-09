@@ -207,8 +207,8 @@ $(OBJ)/mimpidef.o	:	$(COMMON)/mimpidef.c $(HEADERS) $(TARGET)/dosio.h \
 						$(COMMON)/textfile.h $(COMMON)/mimpidef.h
 	$(CC) $(COPT) -o $@ $<
 
-$(OBJ)/parts.o		:	$(COMMON)/parts.c $(HEADERS) $(COMMON)/parts.h
-	$(CC) $(COPT) -o $@ $<
+$(OBJ)/parts.o		:	$(ARM)/parts.s
+	$(AS) $(AOPT) -o $@ $<
 
 $(OBJ)/resize.o		:	$(COMMON)/resize.c $(HEADERS) $(COMMON)/resize.h
 	$(CC) $(COPT) -o $@ $<
