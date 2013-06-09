@@ -20,6 +20,7 @@ AM_PROG_CC_C_O
 AC_PROG_GCC_TRADITIONAL
 AC_PROG_RANLIB
 AC_PROG_INSTALL
+AM_PROG_AS
 
 dnl
 dnl Checks for header files.
