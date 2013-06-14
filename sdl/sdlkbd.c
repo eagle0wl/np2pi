@@ -43,7 +43,7 @@ static const SDLKCNV sdlcnv106[] = {
 			{SDLK_n,			0x2e},	{SDLK_m,			0x2f},
 
 			{SDLK_COMMA,		0x30},	{SDLK_PERIOD,		0x31},
-			{SDLK_SLASH,		0x32},	{SDLK_UNDERSCORE,	0x33},
+			{SDLK_SLASH,		0x32},	{SDLK_PAUSE,		0x33},
 			{SDLK_SPACE,		0x34},
 			{SDLK_PAGEUP,		0x36},	{SDLK_PAGEDOWN,		0x37},
 
@@ -95,12 +95,14 @@ static const SDLKCNV sdlcnv101[] = {
 			{SDLK_u,			0x16},	{SDLK_i,			0x17},
 
 			{SDLK_o,			0x18},	{SDLK_p,			0x19},
+			{SDLK_LEFTBRACKET,	0x1a},	{SDLK_RIGHTBRACKET,	0x1b},
 			{SDLK_RETURN,		0x1c},	{SDLK_a,			0x1d},
 			{SDLK_s,			0x1e},	{SDLK_d,			0x1f},
 
 			{SDLK_f,			0x20},	{SDLK_g,			0x21},
 			{SDLK_h,			0x22},	{SDLK_j,			0x23},
 			{SDLK_k,			0x24},	{SDLK_l,			0x25},
+			{SDLK_SEMICOLON,	0x26},	{SDLK_QUOTE,		0x27},
 
 										{SDLK_z,			0x29},
 			{SDLK_x,			0x2a},	{SDLK_c,			0x2b},
