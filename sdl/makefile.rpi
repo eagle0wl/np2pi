@@ -147,7 +147,7 @@ NP2OBJ	=	$(OBJ)/strres.o		$(OBJ)/milstr.o		$(OBJ)/_memory.o	\
 			$(OBJ)/joymng.o		$(OBJ)/mousemng.o	$(OBJ)/scrnmng.o	\
 			$(OBJ)/soundmng.o	$(OBJ)/sysmng.o		$(OBJ)/taskmng.o	\
 			$(OBJ)/timemng.o	$(OBJ)/sdlkbd.o		$(OBJ)/ini.o		\
-			$(OBJ)/sysmenu.o											\
+			$(OBJ)/sysmenu.o	$(OBJ)/oemtext.o						\
 			$(OBJ)/pccore.o		$(OBJ)/nevent.o		$(OBJ)/calendar.o	\
 			$(OBJ)/timing.o		$(OBJ)/keystat.o	$(OBJ)/statsave.o	\
 			$(OBJ)/debugsub.o
@@ -1026,7 +1026,7 @@ $(OBJ)/commng.o		:	$(TARGET)/commng.c $(HEADERS) $(TARGET)/commng.h \
 	$(CC) $(COPT) -o $@ $<
 
 $(OBJ)/fontmng.o	:	$(TARGET)/fontmng.c $(HEADERS) $(CODECNV)/codecnv.h \
-						$(TARGET)/fontmng.h
+						$(TARGET)/fontmng.h $(TARGET)/oemtext.h
 	$(CC) $(COPT) -o $@ $<
 
 $(OBJ)/inputmng.o	:	$(TARGET)/inputmng.c $(HEADERS) $(TARGET)/inputmng.h
@@ -1036,6 +1036,10 @@ $(OBJ)/joymng.o		:	$(TARGET)/joymng.c $(HEADERS) $(TARGET)/joymng.h
 	$(CC) $(COPT) -o $@ $<
 
 $(OBJ)/mousemng.o	:	$(TARGET)/mousemng.c $(HEADERS) $(TARGET)/mousemng.h
+	$(CC) $(COPT) -o $@ $<
+
+$(OBJ)/oemtext.o	:	$(TARGET)/oemtext.c $(HEADERS) $(CODECNV)/codecnv.h \
+						$(TARGET)/oemtext.h
 	$(CC) $(COPT) -o $@ $<
 
 $(OBJ)/scrnmng.o	:	$(TARGET)/scrnmng.c $(HEADERS) $(EMBEDS) \

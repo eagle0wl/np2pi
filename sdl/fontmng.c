@@ -2,7 +2,7 @@
 #include	<SDL_ttf.h>
 #include	"fontmng.h"
 #include	"codecnv.h"
-
+#include	"oemtext.h"
 
 #if !defined(RESOURCE_US)		// use TTF
 
@@ -226,11 +226,7 @@ static void getlength1(FNTMNG fhdl, FNTDAT fdat,
 	SDL_Surface	*text;
 
 	if (fhdl->fonttype & FDAT_PROPORTIONAL) {
-#if defined(OSLANG_UTF8)
-		codecnv_utf8toucs2(utext, NELEMENTS(utext), string, length);
-#else
-		codecnv_euctoucs2(utext, NELEMENTS(utext), string, length);
-#endif
+		oemtext_oemtoucs2(utext, NELEMENTS(utext), string, length);
 		text = TTF_RenderUNICODE_Solid(fhdl->ttf_font, utext, white);
 		setfdathead(fhdl, fdat, length, text);
 		if (text) {
@@ -272,11 +268,7 @@ static void getfont1(FNTMNG fhdl, FNTDAT fdat,
 	int			y;
 	int			depth;
 
-#if defined(OSLANG_UTF8)
-	codecnv_utf8toucs2(utext, NELEMENTS(utext), string, length);
-#else
-	codecnv_euctoucs2(utext, NELEMENTS(utext), string, length);
-#endif
+	oemtext_oemtoucs2(utext, NELEMENTS(utext), string, length);
 	text = TTF_RenderUNICODE_Solid(fhdl->ttf_font, utext, white);
 	setfdathead(fhdl, fdat, length, text);
 	dst = (UINT8 *)(fdat + 1);
