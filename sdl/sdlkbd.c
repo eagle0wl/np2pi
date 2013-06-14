@@ -160,8 +160,13 @@ const SDLKCNV	*keyterm;
 	for (i=0; i<SDLK_LAST; i++) {
 		keytbl[i] = NC;
 	}
-	key = sdlcnv106;
-	keyterm = key + (sizeof(sdlcnv106)/sizeof(SDLKCNV));
+	if (np2oscfg.KEYBOARD == KEY_KEY101) {
+		key = sdlcnv101;
+		keyterm = key + (sizeof(sdlcnv101)/sizeof(SDLKCNV));
+	} else {
+		key = sdlcnv106;
+		keyterm = key + (sizeof(sdlcnv106)/sizeof(SDLKCNV));
+	}
 	while(key < keyterm) {
 		keytbl[key->sdlkey] = (BYTE)key->keycode;
 		key++;

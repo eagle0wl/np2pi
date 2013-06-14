@@ -5,6 +5,7 @@ typedef struct {
 	BYTE	F12KEY;
 	BYTE	resume;
 	BYTE	jastsnd;
+	BYTE	KEYBOARD;
 } NP2OSCFG;
 
 

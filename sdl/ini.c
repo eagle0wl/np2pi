@@ -5,7 +5,7 @@
 #include	"dosio.h"
 #include	"ini.h"
 #include	"pccore.h"
-
+#include	"sdlkbd.h"
 
 typedef struct {
 const char		*title;
@@ -51,6 +51,26 @@ static void inirdarg8(BYTE *dst, int dsize, const char *src) {
 			break;
 		}
 		dst[i] = val;
+	}
+}
+
+static void
+inirdkb(const char *src, const INITBL *ini)
+{
+
+	if ((!milstr_extendcmp(src, "DOS"))
+	 || (!milstr_cmp(src, "JIS"))
+	 || (!milstr_cmp(src, "106"))
+	 || (!milstr_cmp(src, "JP"))
+	 || (!milstr_cmp(src, "PCAT"))
+	 || (!milstr_cmp(src, "AT"))) {
+		*(UINT8 *)ini->value = KEY_KEY106;
+	} else if ((!milstr_extendcmp(src, "KEY101"))
+	        || (!milstr_cmp(src, "ASCII"))
+	        || (!milstr_cmp(src, "EN"))
+	        || (!milstr_cmp(src, "US"))
+	        || (!milstr_cmp(src, "101"))) {
+		*(UINT8 *)ini->value = KEY_KEY101;
 	}
 }
 
@@ -106,6 +126,10 @@ const INITBL	*p;
 
 				case INITYPE_HEX32:
 					*((UINT32 *)p->value) = (UINT32)milstr_solveHEX(data);
+					break;
+
+				case INITYPE_KB:
+					inirdkb(data, p);
 					break;
 			}
 		}
@@ -265,6 +289,13 @@ const INITBL	*pterm;
 				SPRINTF(work, str_x, *((UINT32 *)p->value));
 				break;
 
+			case INITYPE_KB:
+				if (*(UINT8 *)p->value == KEY_KEY101)
+					milstr_ncpy(work, "101", sizeof(work));
+				else
+					milstr_ncpy(work, "106", sizeof(work));
+				break;
+
 			default:
 				set = FAILURE;
 				break;
@@ -361,6 +392,7 @@ static const INITBL iniitem[] = {
 	{"F12_bind", INITYPE_UINT8,		&np2oscfg.F12KEY,		0},
 	{"e_resume", INITYPE_BOOL,		&np2oscfg.resume,		0},
 	{"jast_snd", INITYPE_BOOL,		&np2oscfg.jastsnd,		0},		// ver0.73
+	{"keyboard", INITYPE_KB,		&np2oscfg.KEYBOARD,		0},
 };
 
 #define	INIITEMS	(sizeof(iniitem) / sizeof(INITBL))
