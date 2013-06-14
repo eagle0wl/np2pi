@@ -50,4 +50,5 @@ typedef struct {
 BOOL scrnmng_entermenu(SCRNMENU *smenu);
 void scrnmng_leavemenu(void);
 void scrnmng_menudraw(const RECT_T *rct);
+void scrnmng_updatecursor(void);
 

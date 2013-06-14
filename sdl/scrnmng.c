@@ -354,6 +354,15 @@ void scrnmng_leavemenu(void) {
 	mousemng_capture(TRUE);
 }
 
+void scrnmng_updatecursor(void) {
+	SDL_Surface	*surface;
+	surface = SDL_GetVideoSurface();
+	if (surface == NULL) {
+		return;
+	}
+	SDL_Flip(surface);
+}
+
 void scrnmng_menudraw(const RECT_T *rct) {
 
 	SDL_Surface	*surface;

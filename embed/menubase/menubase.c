@@ -157,6 +157,8 @@ const	RECT_T	*rect;
 		}
 		scrnmng_menudraw(rect);
 		unionrect_rst(&mb->rect);
+	} else {
+		scrnmng_updatecursor();
 	}
 }
 
