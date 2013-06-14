@@ -228,6 +228,7 @@ const BYTE		*a;
 	if (surface == NULL) {
 		return;
 	}
+	SDL_ShowCursor(SDL_DISABLE);
 	SDL_LockSurface(surface);
 	if (calcdrawrect(surface, &dr, menuvram, &rt) == SUCCESS) {
 		switch(scrnmng.bpp) {
@@ -299,6 +300,7 @@ const BYTE		*a;
 		}
 	}
 	SDL_UnlockSurface(surface);
+	SDL_ShowCursor(SDL_ENABLE);
 	SDL_Flip(surface);
 }
 
@@ -382,6 +384,7 @@ const BYTE		*q;
 	if (surface == NULL) {
 		return;
 	}
+	SDL_ShowCursor(SDL_DISABLE);
 	SDL_LockSurface(surface);
 	if (calcdrawrect(surface, &dr, menuvram, rct) == SUCCESS) {
 		switch(scrnmng.bpp) {
@@ -482,6 +485,7 @@ const BYTE		*q;
 		}
 	}
 	SDL_UnlockSurface(surface);
+	SDL_ShowCursor(SDL_ENABLE);
 	SDL_Flip(surface);
 }
 

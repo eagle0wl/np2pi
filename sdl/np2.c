@@ -8,6 +8,7 @@
 #include	"commng.h"
 #include	"fontmng.h"
 #include	"inputmng.h"
+#include	"mousemng.h"
 #include	"scrnmng.h"
 #include	"soundmng.h"
 #include	"sysmng.h"
