@@ -285,9 +285,12 @@ static void getfont1(FNTMNG fhdl, FNTDAT fdat,
 			}
 		}
 		else {
+			int yofs = text->h - fdat->height;
+			if (yofs < 0) yofs = 0;
+			if (yofs > 2) yofs = 2;
 			for (y=0; y<fdat->height; y++) {
 				for (x=0; x<fdat->width; x++) {
-					*dst++ = getpixeldepth(text, x, y);
+					*dst++ = getpixeldepth(text, x, y + yofs);
 				}
 			}
 		}

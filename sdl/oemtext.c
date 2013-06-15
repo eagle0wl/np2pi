@@ -9,7 +9,7 @@ static UINT oemtext_iconv(iconv_t cd, char *dst, UINT dcnt, char *src, UINT scnt
 
 	UINT	orgdcnt;
 	UINT	orgscnt;
-	char	work[4];
+	char	junk[4];
 
 	if (src == NULL)
 		return 0;
@@ -25,8 +25,8 @@ static UINT oemtext_iconv(iconv_t cd, char *dst, UINT dcnt, char *src, UINT scnt
 	}
 
 	while (scnt > 0 && dcnt > 0) {
-		char* pwork = work;
-		size_t n = iconv(cd, &src, &scnt, dst ? &dst : &pwork, &dcnt);
+		char* pjunk = junk;
+		size_t n = iconv(cd, &src, &scnt, dst ? &dst : &pjunk, &dcnt);
 		if (n == (size_t)-1)
 			break;
 	}
