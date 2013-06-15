@@ -19,7 +19,7 @@ static UINT oemtext_iconv(iconv_t cd, char *dst, UINT dcnt, char *src, UINT scnt
 	}
 	orgdcnt = dcnt;
 	orgscnt = scnt;
-	if (scnt < 0) {
+	if ((SINT)scnt < 0) {
 		scnt = strlen(src);
 		dcnt--;
 	}
@@ -31,7 +31,7 @@ static UINT oemtext_iconv(iconv_t cd, char *dst, UINT dcnt, char *src, UINT scnt
 			break;
 	}
 	if (dst != NULL) {
-		if (orgscnt < 0 || dcnt)
+		if ((SINT)orgscnt < 0 || dcnt)
 			*dst = '\0';
 	}
 	return orgdcnt - dcnt;
