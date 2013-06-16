@@ -5,6 +5,7 @@ typedef struct {
 	SINT16	x;
 	SINT16	y;
 	UINT8	btn;
+	UINT8	showcount;
 } MOUSEMNG;
 
 static	MOUSEMNG	mousemng;
@@ -12,6 +13,7 @@ static	MOUSEMNG	mousemng;
 void mousemng_initialize(void) {
 	ZeroMemory(&mousemng, sizeof(mousemng));
 	mousemng.btn = uPD8255A_LEFTBIT | uPD8255A_RIGHTBIT;
+	mousemng.showcount = 1;
 }
 
 BYTE mousemng_getstat(SINT16 *x, SINT16 *y, int clear) {
@@ -24,12 +26,15 @@ BYTE mousemng_getstat(SINT16 *x, SINT16 *y, int clear) {
 	return(mousemng.btn);
 }
 
-void mousemng_capture(BOOL capture) {
-	if (capture) {
+void mousemng_hidecursor() {
+	if (!--mousemng.showcount) {
 		SDL_ShowCursor(SDL_DISABLE);
 		SDL_WM_GrabInput(SDL_GRAB_ON);
 	}
-	else {
+}
+
+void mousemng_showcursor() {
+	if (!mousemng.showcount++) {
 		SDL_ShowCursor(SDL_ENABLE);
 		SDL_WM_GrabInput(SDL_GRAB_OFF);
 	}

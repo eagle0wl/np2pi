@@ -228,7 +228,7 @@ const BYTE		*a;
 	if (surface == NULL) {
 		return;
 	}
-	SDL_ShowCursor(SDL_DISABLE);
+	mousemng_hidecursor();
 	SDL_LockSurface(surface);
 	if (calcdrawrect(surface, &dr, menuvram, &rt) == SUCCESS) {
 		switch(scrnmng.bpp) {
@@ -300,7 +300,7 @@ const BYTE		*a;
 		}
 	}
 	SDL_UnlockSurface(surface);
-	SDL_ShowCursor(SDL_ENABLE);
+	mousemng_showcursor();
 	SDL_Flip(surface);
 }
 
@@ -343,7 +343,7 @@ BOOL scrnmng_entermenu(SCRNMENU *smenu) {
 	smenu->width = scrnmng.width;
 	smenu->height = scrnmng.height;
 	smenu->bpp = (scrnmng.bpp == 32)?24:scrnmng.bpp;
-	mousemng_capture(FALSE);
+	mousemng_showcursor();
 	return(SUCCESS);
 
 smem_err:
@@ -353,7 +353,7 @@ smem_err:
 void scrnmng_leavemenu(void) {
 
 	VRAM_RELEASE(scrnmng.vram);
-	mousemng_capture(TRUE);
+	mousemng_hidecursor();
 }
 
 void scrnmng_updatecursor(void) {
@@ -384,7 +384,7 @@ const BYTE		*q;
 	if (surface == NULL) {
 		return;
 	}
-	SDL_ShowCursor(SDL_DISABLE);
+	mousemng_hidecursor();
 	SDL_LockSurface(surface);
 	if (calcdrawrect(surface, &dr, menuvram, rct) == SUCCESS) {
 		switch(scrnmng.bpp) {
@@ -485,7 +485,7 @@ const BYTE		*q;
 		}
 	}
 	SDL_UnlockSurface(surface);
-	SDL_ShowCursor(SDL_ENABLE);
+	mousemng_showcursor();
 	SDL_Flip(surface);
 }
 

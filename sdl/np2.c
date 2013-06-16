@@ -163,7 +163,7 @@ int SDL_main(int argc, char **argv) {
 	pccore_init();
 	S98_init();
 
-	mousemng_capture(TRUE);
+	mousemng_hidecursor();
 	scrndraw_redraw();
 	pccore_reset();
 
