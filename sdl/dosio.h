@@ -1,3 +1,6 @@
+#if !defined(WIN32)
+#include <dirent.h>
+#endif
 
 typedef FILE *				FILEH;
 #define	FILEH_INVALID		NULL
@@ -6,8 +9,11 @@ typedef FILE *				FILEH;
 #define	FLISTH				HANDLE
 #define	FLISTH_INVALID		(INVALID_HANDLE_VALUE)
 #else
-#define	FLISTH				long
-#define	FLISTH_INVALID		0
+typedef struct {
+	char	path[MAX_PATH];
+	DIR	*hdl;
+} _FLISTH, *FLISTH;
+#define	FLISTH_INVALID		NULL
 #endif
 
 #define	FSEEK_SET	SEEK_SET

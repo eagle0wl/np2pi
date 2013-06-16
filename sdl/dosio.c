@@ -296,63 +296,69 @@ void file_listclose(FLISTH hdl) {
 
 	FindClose(hdl);
 }
+
 #else
+
 FLISTH file_list1st(const char *dir, FLINFO *fli) {
 
-	DIR		*ret;
+	FLISTH ret;
 
-	ret = opendir(dir);
+	ret = (FLISTH)_MALLOC(sizeof(_FLISTH), "FLISTH");
 	if (ret == NULL) {
-		goto ff1_err;
+		return FLISTH_INVALID;
 	}
-	if (file_listnext((FLISTH)ret, fli) == SUCCESS) {
-		return((FLISTH)ret);
-	}
-	closedir(ret);
 
-ff1_err:
-	return(FLISTH_INVALID);
+	milstr_ncpy(ret->path, dir, sizeof(ret->path));
+	file_setseparator(ret->path, sizeof(ret->path));
+	ret->hdl = opendir(ret->path);
+	if (ret->hdl == NULL) {
+		_MFREE(ret);
+		return FLISTH_INVALID;
+	}
+	if (file_listnext(ret, fli) == SUCCESS) {
+		return ret;
+	}
+	closedir(ret->hdl);
+	_MFREE(ret);
+	return FLISTH_INVALID;
 }
 
 BOOL file_listnext(FLISTH hdl, FLINFO *fli) {
 
-struct dirent	*de;
-struct stat		sb;
-	UINT32		attr;
+	OEMCHAR buf[MAX_PATH];
+	struct dirent *de;
+	struct stat sb;
 
-	de = readdir((DIR *)hdl);
+	de = readdir(hdl->hdl);
 	if (de == NULL) {
-		return(FAILURE);
+		return FAILURE;
 	}
-	if (fli) {
-		if (stat(de->d_name, &sb) == 0) {
-			fli->caps = FLICAPS_SIZE | FLICAPS_ATTR;
-			fli->size = sb.st_size;
-			attr = 0;
-			if (S_ISDIR(sb.st_mode)) {
-				attr = FILEATTR_DIRECTORY;
-			}
-			else if (!(sb.st_mode & S_IWUSR)) {
-				attr = FILEATTR_READONLY;
-			}
-			fli->attr = attr;
-			if (cnv_sttime(&sb.st_mtime, &fli->date, &fli->time) == SUCCESS) {
-				fli->caps |= FLICAPS_DATE | FLICAPS_TIME;
-			}
-		}
-		else {
-			fli->caps = 0;
-			fli->size = 0;
-			fli->attr = 0;
-		}
-		milstr_ncpy(fli->path, de->d_name, sizeof(fli->path));
+
+	milstr_ncpy(buf, hdl->path, sizeof(buf));
+	milstr_ncat(buf, de->d_name, sizeof(buf));
+	if (stat(buf, &sb) != 0) {
+		return FAILURE;
 	}
-	return(SUCCESS);
+
+	fli->caps = FLICAPS_SIZE | FLICAPS_ATTR;
+	fli->size = sb.st_size;
+	fli->attr = 0;
+	if (S_ISDIR(sb.st_mode)) {
+		fli->attr |= FILEATTR_DIRECTORY;
+	}
+	if (!(sb.st_mode & S_IWUSR)) {
+		fli->attr |= FILEATTR_READONLY;
+	}
+	milstr_ncpy(fli->path, de->d_name, sizeof(fli->path));
+	return SUCCESS;
 }
 
 void file_listclose(FLISTH hdl) {
 
-	closedir((DIR *)hdl);
+	if (hdl) {
+		closedir(hdl->hdl);
+		_MFREE(hdl);
+	}
 }
 #endif
 
