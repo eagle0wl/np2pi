@@ -195,7 +195,7 @@ const OEMCHAR	*p;
 	}
 	p = file_getext(path);
 	while(*ext) {
-		if (!file_cmpname(p, ext)) {
+		if (!milstr_cmp(p, ext)) {
 			return(TRUE);
 		}
 		ext += OEMSTRLEN(ext) + 1;
