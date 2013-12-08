@@ -78,10 +78,24 @@ void scrnmng_initialize(void) {
 	scrnstat.height = 400;
 }
 
+static int screenbpp() {
+#if defined(SCREEN_BPP)
+	return(SCREEN_BPP);
+#else
+const SDL_VideoInfo	*vinfo;
+	vinfo = SDL_GetVideoInfo();
+	if (vinfo == NULL) {
+		fprintf(stderr, "Error: SDL_GetVideoInfo: %s\n", SDL_GetError());
+		return(0);
+	}
+	return(vinfo->vfmt->BitsPerPixel);
+#endif
+}
+
 BOOL scrnmng_create(int width, int height) {
 
 	char			s[256];
-const SDL_VideoInfo	*vinfo;
+	int				bpp;
 	SDL_Surface		*surface;
 	SDL_PixelFormat	*fmt;
 	BOOL			r;
@@ -91,14 +105,15 @@ const SDL_VideoInfo	*vinfo;
 		return(FAILURE);
 	}
 	SDL_WM_SetCaption(app_name, app_name);
-	vinfo = SDL_GetVideoInfo();
-	if (vinfo == NULL) {
-		fprintf(stderr, "Error: SDL_GetVideoInfo: %s\n", SDL_GetError());
+
+	bpp = screenbpp();
+	if (!bpp) {
 		return(FAILURE);
 	}
+
 	SDL_VideoDriverName(s, sizeof(s));
 
-	surface = SDL_SetVideoMode(width, height, vinfo->vfmt->BitsPerPixel,
+	surface = SDL_SetVideoMode(width, height, bpp,
 		    SDL_HWSURFACE | SDL_ANYFORMAT | SDL_FULLSCREEN | ADDITIONAL_VIDEOMODEFLAG);
 	if (surface == NULL) {
 		fprintf(stderr, "Error: SDL_SetVideoMode: %s\n", SDL_GetError());
