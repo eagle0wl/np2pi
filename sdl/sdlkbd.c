@@ -173,6 +173,8 @@ const SDLKCNV	*keyterm;
 		keytbl[key->sdlkey] = (BYTE)key->keycode;
 		key++;
 	}
+
+	SDL_EnableKeyRepeat(500, 40);
 }
 
 static BYTE getf12key(void) {

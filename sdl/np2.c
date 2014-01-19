@@ -141,7 +141,6 @@ int SDL_main(int argc, char **argv) {
 	if (fontmng_init() != SUCCESS) {
 		goto np2main_err2;
 	}
-	sdlkbd_initialize();
 	inputmng_init();
 	keystat_initialize();
 
@@ -155,6 +154,8 @@ int SDL_main(int argc, char **argv) {
 	if (scrnmng_create(FULLSCREEN_WIDTH, FULLSCREEN_HEIGHT) != SUCCESS) {
 		goto np2main_err4;
 	}
+
+	sdlkbd_initialize();  // this must be after SDL_VIDEO initialized
 
 	soundmng_initialize();
 	commng_initialize();
