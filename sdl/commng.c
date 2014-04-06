@@ -1,7 +1,6 @@
 #include	"compiler.h"
 #include	"np2.h"
 #include	"commng.h"
-#include	"cmver.h"
 #include	"cmjasts.h"
 
 
@@ -46,7 +45,7 @@ static const _COMMNG com_nc = {
 
 void commng_initialize(void) {
 
-	cmvermouth_initialize();
+	cmmidi_initialize();
 }
 
 COMMNG commng_create(UINT device) {
@@ -55,7 +54,11 @@ COMMNG commng_create(UINT device) {
 
 	ret = NULL;
 	if (device == COMCREATE_MPU98II) {
-		ret = cmvermouth_create();
+		ret = cmmidi_create(np2oscfg.mpu.mout, np2oscfg.mpu.min, np2oscfg.mpu.mdl);
+		if (ret) {
+			(*ret->msg)(ret, COMMSG_MIMPIDEFFILE, (long)np2oscfg.mpu.def);
+			(*ret->msg)(ret, COMMSG_MIMPIDEFEN, (long)np2oscfg.mpu.def_en);
+		}
 	}
 	else if (device == COMCREATE_PRINTER) {
 		if (np2oscfg.jastsnd) {

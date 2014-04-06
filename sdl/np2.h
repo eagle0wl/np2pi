@@ -1,10 +1,28 @@
 
 typedef struct {
+	BYTE	port;
+	BYTE	def_en;
+	BYTE	param;
+	UINT32	speed;
+	char	mout[MAX_PATH];
+	char	min[MAX_PATH];
+	char	mdl[64];
+	char	def[MAX_PATH];
+} COMCFG;
+
+typedef struct {
 	BYTE	NOWAIT;
 	BYTE	DRAW_SKIP;
 	BYTE	F12KEY;
+
+	COMCFG	mpu;
+
 	BYTE	resume;
 	BYTE	jastsnd;
+
+	char	MIDIDEV[2][MAX_PATH];
+	UINT32	MIDIWAIT;
+
 	BYTE	KEYBOARD;
 } NP2OSCFG;
 

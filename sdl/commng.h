@@ -51,6 +51,28 @@ extern "C" {
 COMMNG commng_create(UINT device);
 void commng_destroy(COMMNG hdl);
 
+enum {
+	COMPORT_NONE			= 0,
+	COMPORT_COM1,
+	COMPORT_COM2,
+	COMPORT_COM3,
+	COMPORT_COM4,
+	COMPORT_MIDI
+};
+
+enum {
+	COMSIG_COM1			= 0x314d4f43,
+	COMSIG_COM2			= 0x324d4f43,
+	COMSIG_COM3			= 0x334d4f43,
+	COMSIG_COM4			= 0x344d4f43,
+	COMSIG_MIDI			= 0x4944494d
+};
+
+enum {
+	COMMSG_MIMPIDEFFILE		= COMMSG_USER,
+	COMMSG_MIMPIDEFEN
+};
+
 #ifdef __cplusplus
 }
 #endif
@@ -60,3 +82,4 @@ void commng_destroy(COMMNG hdl);
 
 void commng_initialize(void);
 
+#include "cmmidi.h"

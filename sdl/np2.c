@@ -27,7 +27,21 @@
 #include	"sysmenu.h"
 
 
-		NP2OSCFG	np2oscfg = {0, 0, 0, 0, 0, KEY_KEY106};
+NP2OSCFG np2oscfg = {
+	0,			/* NOWAIT */
+	0,			/* DRAW_SKIP */
+	0,			/* F12KEY */
+
+	{ COMPORT_MIDI, 0, 0x3e, 19200, "", "", "", "" },	/* mpu */
+
+	0,			/* resume */
+	0,			/* jastsnd */
+
+	{ "", "" }, 		/* MIDIDEV */
+	0,			/* MIDIWAIT */
+
+	KEY_KEY106,	/* KEYBOARD */
+};
 static	UINT		framecnt;
 static	UINT		waitcnt;
 static	UINT		framemax = 1;

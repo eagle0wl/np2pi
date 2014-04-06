@@ -3,8 +3,9 @@
 #include	"soundmng.h"
 #include	"sound.h"
 #if defined(VERMOUTH_LIB)
-#include	"commng.h"
-#include	"cmver.h"
+#include	"vermouth.h"
+
+MIDIMOD vermouth_module = NULL;
 #endif
 
 
@@ -83,7 +84,8 @@ UINT soundmng_create(UINT rate, UINT ms) {
 		return(FAILURE);
 	}
 #if defined(VERMOUTH_LIB)
-	cmvermouth_load(rate);
+	vermouth_module = midimod_create(rate);
+	midimod_loadall(vermouth_module);
 #endif
 	soundmng.opened = TRUE;
 	return(samples);
@@ -116,7 +118,8 @@ void soundmng_destroy(void) {
 			_MFREE(tmp);
 		}
 #if defined(VERMOUTH_LIB)
-//		cmvermouth_unload();
+		midimod_destroy(vermouth_module);
+		vermouth_module = NULL;
 #endif
 	}
 }
@@ -143,8 +146,6 @@ void soundmng_initialize(void) {
 
 void soundmng_deinitialize(void) {
 
-#if defined(VERMOUTH_LIB)
-	cmvermouth_unload();
-#endif
+	soundmng_destroy();
 }
 

@@ -386,6 +386,15 @@ static const INITBL iniitem[] = {
 	{"calendar", INITYPE_BOOL,		&np2cfg.calendar,		0},
 	{"USE144FD", INITYPE_BOOL,		&np2cfg.usefd144,		0},
 
+	{"mpu98map", INITYPE_STR,		np2oscfg.mpu.mout,		MAX_PATH},
+	{"mpu98min", INITYPE_STR,		np2oscfg.mpu.min,		MAX_PATH},
+	{"mpu98mdl", INITYPE_STR,		np2oscfg.mpu.mdl,		64},
+	{"mpu98def", INITYPE_STR,		np2oscfg.mpu.def,		MAX_PATH},
+
+	{"MIDIOUTd", INITYPE_STR,		&np2oscfg.MIDIDEV[0],	MAX_PATH},
+	{"MIDIIN_d", INITYPE_STR,		&np2oscfg.MIDIDEV[1],	MAX_PATH},
+	{"MIDIWAIT", INITYPE_UINT32,	&np2oscfg.MIDIWAIT,		0},
+
 	// OSàÀë∂Å`
 	{"s_NOWAIT", INITYPE_BOOL,		&np2oscfg.NOWAIT,		0},
 	{"SkpFrame", INITYPE_UINT8,		&np2oscfg.DRAW_SKIP,	0},

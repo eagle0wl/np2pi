@@ -109,7 +109,7 @@ NP2OBJ	=	$(OBJ)/strres.o		$(OBJ)/milstr.o		$(OBJ)/_memory.o	\
 			$(OBJ)/boardx2.o	$(OBJ)/board118.o	$(OBJ)/boardspb.o	\
 			$(OBJ)/amd98.o		$(OBJ)/pcm86io.o	$(OBJ)/cs4231io.o	\
 			$(OBJ)/midiout.o	$(OBJ)/midimod.o	$(OBJ)/midinst.o	\
-			$(OBJ)/midvoice.o	$(OBJ)/midtable.o						\
+			$(OBJ)/midvoice.o	$(OBJ)/midtable.o	$(OBJ)/cmmidi.o		\
 			$(OBJ)/getsnd.o		$(OBJ)/getwave.o	$(OBJ)/getsmix.o	\
 			$(OBJ)/bios.o		$(OBJ)/bios09.o		$(OBJ)/bios0c.o		\
 			$(OBJ)/bios12.o		$(OBJ)/bios13.o		$(OBJ)/bios18.o		\
@@ -679,6 +679,12 @@ $(OBJ)/s98.o		:	$(SOUND)/s98.c $(HEADERS) $(PCCORES) $(IOCORES) \
 						$(SOUND)/s98.h
 	$(CC) $(COPT) -o $@ $<
 
+
+$(OBJ)/cmmidi.o		:	$(TARGET)/cmmidi.c $(HEADERS) $(TARGET)/commng.h \
+						$(COMMON)/mimpidef.h $(SOUND)/sound.h \
+						$(GENERIC)/keydisp.h $(VERMOUTH)/vermouth.h \
+						$(TARGET)/cmmidi.h
+	$(CC) $(COPT) -o $@ $<
 
 
 $(OBJ)/midiout.o	:	$(VERMOUTH)/midiout.c $(HEADERS) $(VERMOUTHS)
