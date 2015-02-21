@@ -8,11 +8,6 @@
 #include	"vramhdl.h"
 #include	"menubase.h"
 
-#ifdef NO_DOUBLEBUF
-#define ADDITIONAL_VIDEOMODEFLAG 0
-#else
-#define ADDITIONAL_VIDEOMODEFLAG SDL_DOUBLEBUF
-#endif
 
 typedef struct {
 	BOOL		enable;
@@ -114,7 +109,7 @@ BOOL scrnmng_create(int width, int height) {
 	SDL_VideoDriverName(s, sizeof(s));
 
 	surface = SDL_SetVideoMode(width, height, bpp,
-		    SDL_HWSURFACE | SDL_ANYFORMAT | SDL_FULLSCREEN | ADDITIONAL_VIDEOMODEFLAG);
+		    SDL_HWSURFACE | SDL_ANYFORMAT | SDL_FULLSCREEN);
 	if (surface == NULL) {
 		fprintf(stderr, "Error: SDL_SetVideoMode: %s\n", SDL_GetError());
 		return(FAILURE);
