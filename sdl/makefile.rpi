@@ -152,7 +152,7 @@ NP2OBJ	=	$(OBJ)/strres.o		$(OBJ)/milstr.o		$(OBJ)/_memory.o	\
 			$(OBJ)/timing.o		$(OBJ)/keystat.o	$(OBJ)/statsave.o	\
 			$(OBJ)/debugsub.o
 
-NP2LIB	= -lSDL -lSDL_ttf -lfreetype `$(SDL_CONFIG) --libs`
+NP2LIB	= -lm -lSDL -lSDL_ttf -lfreetype `$(SDL_CONFIG) --libs`
 NP2BIN	= $(BIN)/np2
 
 
