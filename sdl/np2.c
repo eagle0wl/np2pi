@@ -132,7 +132,7 @@ int SDL_main(int argc, char **argv) {
 	int		pos;
 	char	*p;
 	int		id;
-	int		i, drivetype, drvfdd, drvhddSASI, drvhddSCSI;
+	int		i, imagetype, drvfdd, drvhddSASI, drvhddSCSI;
 	char	*ext;
 
 	pos = 1;
@@ -157,22 +157,24 @@ int SDL_main(int argc, char **argv) {
 		if (OEMSTRLEN(argv[i]) < 5) {
 			continue;
 		}
-		drivetype = 0;
 		
+		imagetype = IMAGETYPE_UNKNOWN;
 		ext = argv[i] + OEMSTRLEN(argv[i]) - 4;
-		if      (0 == milstr_cmp(ext, ".hdi")) drivetype = 2; // SASI/IDE
-		else if (0 == milstr_cmp(ext, ".thd")) drivetype = 2;
-		else if (0 == milstr_cmp(ext, ".nhd")) drivetype = 2;
-		else if (0 == milstr_cmp(ext, ".hdd")) drivetype = 3; // SCSI
+		if      (0 == milstr_cmp(ext, ".hdi"))	imagetype = IMAGETYPE_SASI_IDE; // SASI/IDE
+		else if (0 == milstr_cmp(ext, ".thd"))	imagetype = IMAGETYPE_SASI_IDE;
+		else if (0 == milstr_cmp(ext, ".nhd"))	imagetype = IMAGETYPE_SASI_IDE;
+		else if (0 == milstr_cmp(ext, ".hdd"))	imagetype = IMAGETYPE_SCSI; // SCSI
 		
-		switch (drivetype) {
-		case 2:
+		printf("imagetype(%s)=%d", ext, imagetype);
+		
+		switch (imagetype) {
+		case IMAGETYPE_SASI_IDE:
 			if (drvhddSASI < 2) {
 				milstr_ncpy(np2cfg.sasihdd[drvhddSASI], argv[i], MAX_PATH);
 				drvhddSASI++;
 			}
 			break;
-		case 3:
+		case IMAGETYPE_SCSI:
 			if (drvhddSCSI < 4) {
 				milstr_ncpy(np2cfg.scsihdd[drvhddSASI], argv[i], MAX_PATH);
 				drvhddSCSI++;
@@ -226,16 +228,21 @@ int SDL_main(int argc, char **argv) {
 			continue;
 		}
 		
-		drivetype = 0;
+		imagetype = IMAGETYPE_UNKNOWN;
 		ext = argv[i] + OEMSTRLEN(argv[i]) - 4;
+		if      (0 == milstr_cmp(ext, ".d88")) imagetype = IMAGETYPE_FDD; // FDD
+		else if (0 == milstr_cmp(ext, ".d98")) imagetype = IMAGETYPE_FDD;
+		else if (0 == milstr_cmp(ext, ".fdi")) imagetype = IMAGETYPE_FDD;
+		else if (0 == milstr_cmp(ext, ".hdm")) imagetype = IMAGETYPE_FDD;
+		else if (0 == milstr_cmp(ext, ".xdf")) imagetype = IMAGETYPE_FDD;
+		else if (0 == milstr_cmp(ext, ".dup")) imagetype = IMAGETYPE_FDD;
+		else if (0 == milstr_cmp(ext, ".2hd")) imagetype = IMAGETYPE_FDD;
 		
-		if      (0 == milstr_cmp(ext, ".d88")) drivetype = 1;
-		else if (0 == milstr_cmp(ext, ".d98")) drivetype = 1;
-		else if (0 == milstr_cmp(ext, ".xdf")) drivetype = 1;
-		else if (0 == milstr_cmp(ext, ".hdm")) drivetype = 1;
-		else if (0 == milstr_cmp(ext, ".dup")) drivetype = 1;
-		else if (0 == milstr_cmp(ext, ".2hd")) drivetype = 1;
-		else continue;
+		if (imagetype == IMAGETYPE_UNKNOWN) {
+			continue;
+		}
+		
+		printf("imagetype(%s)=%d", ext, imagetype);
 		
 		if (drvfdd < 4) {
 			diskdrv_readyfdd(drvfdd, argv[i], 0);

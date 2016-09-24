@@ -41,3 +41,9 @@ enum {
 
 extern	NP2OSCFG	np2oscfg;
 
+enum {
+	IMAGETYPE_UNKNOWN	= 0,
+	IMAGETYPE_FDD		= 1,
+	IMAGETYPE_SASI_IDE	= 2,
+	IMAGETYPE_SCSI		= 3,
+};
