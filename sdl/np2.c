@@ -132,6 +132,8 @@ int SDL_main(int argc, char **argv) {
 	int		pos;
 	char	*p;
 	int		id;
+	int		i, drivetype, drvfdd, drvhddSASI, drvhddSCSI;
+	char	*ext;
 
 	pos = 1;
 	while(pos < argc) {
@@ -139,16 +141,45 @@ int SDL_main(int argc, char **argv) {
 		if ((!milstr_cmp(p, "-h")) || (!milstr_cmp(p, "--help"))) {
 			usage(argv[0]);
 			goto np2main_err1;
-		}
+		}/*
 		else {
 			printf("error command: %s\n", p);
 			goto np2main_err1;
-		}
+		}*/
 	}
 
 	dosio_init();
 	file_setcd(datadir);
 	initload();
+	
+	drvhddSASI = drvhddSCSI = 0;
+	for (i = 1; i < argc; i++) {
+		if (OEMSTRLEN(argv[i]) < 5) {
+			continue;
+		}
+		drivetype = 0;
+		
+		ext = argv[i] + OEMSTRLEN(argv[i]) - 4;
+		if      (0 == milstr_cmp(ext, ".hdi")) drivetype = 2; // SASI/IDE
+		else if (0 == milstr_cmp(ext, ".thd")) drivetype = 2;
+		else if (0 == milstr_cmp(ext, ".nhd")) drivetype = 2;
+		else if (0 == milstr_cmp(ext, ".hdd")) drivetype = 3; // SCSI
+		
+		switch (drivetype) {
+		case 2:
+			if (drvhddSASI < 2) {
+				milstr_ncpy(np2cfg.sasihdd[drvhddSASI], argv[i], MAX_PATH);
+				drvhddSASI++;
+			}
+			break;
+		case 3:
+			if (drvhddSCSI < 4) {
+				milstr_ncpy(np2cfg.scsihdd[drvhddSASI], argv[i], MAX_PATH);
+				drvhddSCSI++;
+			}
+			break;
+		}
+	}
 
 	TRACEINIT();
 
@@ -188,7 +219,31 @@ int SDL_main(int argc, char **argv) {
 			goto np2main_err5;
 		}
 	}
-
+	
+	drvfdd = drvhddSASI = drvhddSCSI = 0;
+	for (i = 1; i < argc; i++) {
+		if (OEMSTRLEN(argv[i]) < 5) {
+			continue;
+		}
+		
+		drivetype = 0;
+		ext = argv[i] + OEMSTRLEN(argv[i]) - 4;
+		
+		if      (0 == milstr_cmp(ext, ".d88")) drivetype = 1;
+		else if (0 == milstr_cmp(ext, ".d98")) drivetype = 1;
+		else if (0 == milstr_cmp(ext, ".xdf")) drivetype = 1;
+		else if (0 == milstr_cmp(ext, ".hdm")) drivetype = 1;
+		else if (0 == milstr_cmp(ext, ".dup")) drivetype = 1;
+		else if (0 == milstr_cmp(ext, ".2hd")) drivetype = 1;
+		else continue;
+		
+		if (drvfdd < 4) {
+			diskdrv_readyfdd(drvfdd, argv[i], 0);
+			drvfdd++;
+		}
+		break;
+	}
+	
 	while(taskmng_isavail()) {
 		taskmng_rol();
 		if (np2oscfg.NOWAIT) {
