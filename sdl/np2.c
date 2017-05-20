@@ -165,8 +165,6 @@ int SDL_main(int argc, char **argv) {
 		else if (0 == milstr_cmp(ext, ".nhd"))	imagetype = IMAGETYPE_SASI_IDE;
 		else if (0 == milstr_cmp(ext, ".hdd"))	imagetype = IMAGETYPE_SCSI; // SCSI
 		
-		printf("imagetype(%s)=%d", ext, imagetype);
-		
 		switch (imagetype) {
 		case IMAGETYPE_SASI_IDE:
 			if (drvhddSASI < 2) {
@@ -242,13 +240,11 @@ int SDL_main(int argc, char **argv) {
 			continue;
 		}
 		
-		printf("imagetype(%s)=%d", ext, imagetype);
-		
 		if (drvfdd < 4) {
 			diskdrv_readyfdd(drvfdd, argv[i], 0);
 			drvfdd++;
 		}
-		break;
+		
 	}
 	
 	while(taskmng_isavail()) {
